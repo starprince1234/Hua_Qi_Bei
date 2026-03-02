@@ -5,7 +5,6 @@ import warnings
 
 warnings.filterwarnings('ignore')
 
-
 def setup_chinese_font():
     plt.rcParams['font.sans-serif'] = ['WenQuanYi Zen Hei', 'Microsoft YaHei', 'SimHei', 'Arial Unicode MS']
     plt.rcParams['axes.unicode_minus'] = False
