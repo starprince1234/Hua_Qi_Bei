@@ -1,0 +1,178 @@
+openapi: 3.1.0
+info:
+  title: Oil Price Model Service API
+  version: 1.0.0
+  description: >
+    Remote model inference service (Model-as-a-Service).
+    Responsibilities: accept standardized feature matrix JSON, run inference,
+    return multi-quantile return forecasts, confidence/risk, optional SHAP.
+servers:
+  - url: https://model-service.example.com/model/v1
+    description: Production (example)
+  - url: http://127.0.0.1:9000/model/v1
+    description: Local dev (example)
+
+tags:
+  - name: Inference
+  - name: Meta
+  - name: Health
+
+security:
+  - hmacAuth: []
+  - bearerAuth: []
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      operationId: health
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+
+  /metadata:
+    get:
+      tags: [Meta]
+      summary: Get model metadata (versions, expected features, capabilities)
+      operationId: metadata
+      responses:
+        "200":
+          description: Metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetadataResponse"
+
+  /schema:
+    get:
+      tags: [Meta]
+      summary: Get JSON schema for request/response (for contract validation)
+      operationId: schema
+      responses:
+        "200":
+          description: JSON schema objects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SchemaResponse"
+
+  /predict/returns:
+    post:
+      tags: [Inference]
+      summary: Predict future return quantiles (and optional SHAP)
+      operationId: predictReturns
+      parameters:
+        - $ref: "#/components/parameters/RequestIdHeader"
+        - $ref: "#/components/parameters/SignatureHeader"
+        - $ref: "#/components/parameters/TimestampHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModelPredictRequest"
+      responses:
+        "200":
+          description: Prediction result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelPredictResponse"
+        "400":
+          $ref: "#/components/responses/Error400"
+        "422":
+          $ref: "#/components/responses/Error422"
+        "429":
+          $ref: "#/components/responses/Error429"
+        "503":
+          $ref: "#/components/responses/Error503"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+components:
+  securitySchemes:
+    hmacAuth:
+      type: apiKey
+      in: header
+      name: X-Signature
+      description: HMAC signature of body + timestamp (deployment-defined)
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    RequestIdHeader:
+      name: X-Request-Id
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Trace id propagated end-to-end
+    SignatureHeader:
+      name: X-Signature
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional HMAC signature for authenticity
+    TimestampHeader:
+      name: X-Signature-Timestamp
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Timestamp used by signature verification
+
+  responses:
+    Error400:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelErrorResponse"
+    Error422:
+      description: Unprocessable semantic error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelErrorResponse"
+    Error429:
+      description: Rate limited
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelErrorResponse"
+    Error500:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelErrorResponse"
+    Error503:
+      description: Unavailable / overloaded
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelErrorResponse"
+
+  schemas:
+    ModelErrorResponse:
+      type: object
+      required: [success, code, message, request_id]
+      properties:
+        success: { type: boolean, const: false }
+        code: { type: integer }
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+        request_id:
+          type: [string, "null"]
