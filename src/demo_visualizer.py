@@ -55,7 +55,7 @@ def demo_with_saved_models():
     print("="*60)
     
     # 1. 加载模型（使用绝对路径）
-    model_path = BASE_DIR / 'OilPrice_Full_Suite.pkl'
+    model_path = BASE_DIR / 'OilPrice_Full_Suite.joblib'
     try:
         models_dict = joblib.load(model_path)
     except Exception as e:
@@ -349,7 +349,7 @@ def demo_with_date():
         return
 
     # 加载模型
-    models_dict = joblib.load(BASE_DIR / 'OilPrice_Full_Suite.pkl')
+    models_dict = joblib.load(BASE_DIR / 'OilPrice_Full_Suite.joblib')
     model_7d = models_dict['7D']['model']
 
     # 准备数据
@@ -375,7 +375,7 @@ def demo_with_date():
     xgb_pred, ridge_pred = model_7d.base_models.predict(X)
     meta_features = np.column_stack([xgb_pred, ridge_pred])
     y_pred = model_7d.meta_model.predict(meta_features)
-
+2
     # 创建包含日期的 DataFrame
     if '日期' in df.columns:
         plot_df = pd.DataFrame({
@@ -408,7 +408,7 @@ def demo_multi_horizon_comparison():
     print("="*60)
 
     # 加载所有模型
-    models_dict = joblib.load(BASE_DIR / 'OilPrice_Full_Suite.pkl')
+    models_dict = joblib.load(BASE_DIR / 'OilPrice_Full_Suite.joblib')
 
     # 提取模型对象
     models = {k: v['model'] for k, v in models_dict.items()}
@@ -455,7 +455,7 @@ def demo_risk_interval():
         return
 
     # 加载模型
-    models_dict = joblib.load(BASE_DIR / 'OilPrice_Full_Suite.pkl')
+    models_dict = joblib.load(BASE_DIR / 'OilPrice_Full_Suite.joblib')
     model_7d = models_dict['7D']['model']
 
     # 准备数据

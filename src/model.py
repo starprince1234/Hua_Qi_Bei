@@ -475,7 +475,7 @@ class OilPricePredictor:
             if logger:
                 logger.save_report()
 
-    def save_models(self, filename='OilPrice_Full_Suite.pkl'):
+    def save_models(self, filename='OilPrice_Full_Suite.joblib'):
         """保存所有模型到项目根目录"""
         import os
         # 获取 model.py 所在目录的父目录（项目根目录，与 src 同级）
@@ -485,7 +485,7 @@ class OilPricePredictor:
         print(f"✓ 模型已保存到 {save_path}")
         return save_path
 
-    def load_models(self, filename='OilPrice_Full_Suite.pkl'):
+    def load_models(self, filename='OilPrice_Full_Suite.joblib'):
         """加载模型（从项目根目录加载）"""
         import os
         # 获取项目根目录，确保路径一致性
