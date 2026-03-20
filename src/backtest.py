@@ -15,7 +15,7 @@ from model import StackingModel,BaseModels
 class BacktestEngine:
     """回测引擎 - 用于历史数据验证模型性能"""
 
-    def __init__(self, models_path='OilPrice_Full_Suite.pkl'):
+    def __init__(self, models_path='OilPrice_Full_Suite.joblib'):
         """
         初始化回测引擎
         
@@ -195,7 +195,7 @@ class BacktestEngine:
 # 使用示例
 if __name__ == '__main__':
     # 初始化回测引擎
-    backtest = BacktestEngine('OilPrice_Full_Suite.pkl')
+    backtest = BacktestEngine('OilPrice_Full_Suite.joblib')
     
     # 加载数据示例（需要替换为实际数据路径）
     # df = pd.read_excel('../data/processed/油价预测7日波动率因子表.xlsx')

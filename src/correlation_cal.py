@@ -16,7 +16,7 @@ if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 else:
 
-df = pd.read_excel('../data/raw/油价预测_新增特征后的数据表（涨跌幅汇总）.xlsx')
+    df = pd.read_excel('../data/raw/油价预测_新增特征后的数据表（涨跌幅汇总）.xlsx')
 
 # 定义5个标准格式目标变量
 target_variables = [
