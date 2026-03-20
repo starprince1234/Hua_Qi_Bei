@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  oil-orchestrator:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: oil-risk-orchestrator:latest
+    container_name: oil-orchestrator
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - MODEL_API_URL=${MODEL_API_URL:-http://host.docker.internal:9000/predict}
+      - MODEL_API_KEY=${MODEL_API_KEY:-}
+      - LLM_API_KEY=${LLM_API_KEY:-}
+      - LLM_MODEL=${LLM_MODEL:-gpt-4o-mini}
+      - USE_MOCK_MODEL=${USE_MOCK_MODEL:-false}
+    volumes:
+      - ../logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import httpx; httpx.get('http://localhost:8000/api/v1/health/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 可选：开发模式（热重载）
+  oil-orchestrator-dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: oil-risk-orchestrator:dev
+    container_name: oil-orchestrator-dev
+    ports:
+      - "8001:8000"
+    environment:
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - USE_MOCK_MODEL=true
+    volumes:
+      - ..:/app
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    profiles:
+      - dev

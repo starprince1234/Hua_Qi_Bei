@@ -1,0 +1,45 @@
+name: HUAQIBEI
+
+services:
+  backend:
+    build:
+      context: ./backend/huaqibei/oil-risk-orchestrator
+      dockerfile: docker/Dockerfile
+    ports:
+      - "18000:8000"
+    environment:
+      - MODE=prod
+      - API_KEY=your_api_key_here
+      - USE_MOCK_MODEL=true
+      - MODEL_API_URL=http://backend:8000/model/v1
+      - LLM_PROVIDER=siliconflow
+      - LLM_BASE_URL=https://api.siliconflow.cn/v1
+      - LLM_API_KEY=sk-cnzloxraxyysxdruoixnyxriucjdrqxnknafbpqcnveoongf
+      - LLM_MODEL_ID=Pro/deepseek-ai/DeepSeek-V3.2
+      - LLM_JSON_MODE=true
+      - LLM_ENABLE_THINKING=false
+      - LLM_THINKING_BUDGET=4096
+      - LLM_TOP_P=0.7
+      - LLM_TOP_K=50
+      - LLM_FREQUENCY_PENALTY=0.2
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:18000
+    ports:
+      - "13000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:18000
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
+    driver: bridge

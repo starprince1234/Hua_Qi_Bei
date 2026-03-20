@@ -1,0 +1,383 @@
+openapi: 3.1.0
+info:
+  title: Oil Price Model Service API
+  version: 1.0.0
+  description: >
+    Remote model inference service (Model-as-a-Service).
+    Responsibilities: accept standardized feature matrix JSON, run inference,
+    return multi-quantile return forecasts, confidence/risk, optional SHAP.
+servers:
+  - url: https://model-service.example.com/model/v1
+    description: Production (example)
+  - url: http://127.0.0.1:9000/model/v1
+    description: Local dev (example)
+
+tags:
+  - name: Inference
+  - name: Meta
+  - name: Health
+
+security:
+  - hmacAuth: []
+  - bearerAuth: []
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      operationId: health
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+
+  /metadata:
+    get:
+      tags: [Meta]
+      summary: Get model metadata (versions, expected features, capabilities)
+      operationId: metadata
+      responses:
+        "200":
+          description: Metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetadataResponse"
+
+  /schema:
+    get:
+      tags: [Meta]
+      summary: Get JSON schema for request/response (for contract validation)
+      operationId: schema
+      responses:
+        "200":
+          description: JSON schema objects
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SchemaResponse"
+
+  /predict/returns:
+    post:
+      tags: [Inference]
+      summary: Predict future return quantiles (and optional SHAP)
+      operationId: predictReturns
+      parameters:
+        - $ref: "#/components/parameters/RequestIdHeader"
+        - $ref: "#/components/parameters/SignatureHeader"
+        - $ref: "#/components/parameters/TimestampHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ModelPredictRequest"
+      responses:
+        "200":
+          description: Prediction result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelPredictResponse"
+        "400":
+          $ref: "#/components/responses/Error400"
+        "422":
+          $ref: "#/components/responses/Error422"
+        "429":
+          $ref: "#/components/responses/Error429"
+        "503":
+          $ref: "#/components/responses/Error503"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+components:
+  securitySchemes:
+    hmacAuth:
+      type: apiKey
+      in: header
+      name: X-Signature
+      description: HMAC signature of body + timestamp (deployment-defined)
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    RequestIdHeader:
+      name: X-Request-Id
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Trace id propagated end-to-end
+    SignatureHeader:
+      name: X-Signature
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Optional HMAC signature for authenticity
+    TimestampHeader:
+      name: X-Signature-Timestamp
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Timestamp used by signature verification
+
+  responses:
+    Error400:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelErrorResponse"
+          examples:
+            badInput:
+              value:
+                success: false
+                code: 400
+                message: VALIDATION_ERROR
+                details:
+                  reason: "X and feature_names length mismatch"
+                request_id: req_xxx
+    Error422:
+      description: Unprocessable semantic error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelErrorResponse"
+          examples:
+            featureMismatch:
+              value:
+                success: false
+                code: 422
+                message: FEATURE_CONFIG_MISMATCH
+                details:
+                  expected_feature_config_version: feat_cfg_v7
+                  got: feat_cfg_v6
+                request_id: req_xxx
+    Error429:
+      description: Rate limited
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelErrorResponse"
+    Error500:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelErrorResponse"
+    Error503:
+      description: Unavailable / overloaded
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ModelErrorResponse"
+          examples:
+            unavailable:
+              value:
+                success: false
+                code: 503
+                message: MODEL_OVERLOADED
+                details:
+                  retry_after_sec: 2
+                request_id: req_xxx
+
+  schemas:
+    ModelErrorResponse:
+      type: object
+      required: [success, code, message, request_id]
+      properties:
+        success: { type: boolean, const: false }
+        code: { type: integer }
+        message:
+          type: string
+          examples: [VALIDATION_ERROR, FEATURE_CONFIG_MISMATCH, SCALER_VERSION_MISMATCH, MODEL_OVERLOADED]
+        details:
+          type: object
+          additionalProperties: true
+        request_id:
+          type: [string, "null"]
+
+    HealthResponse:
+      type: object
+      required: [status, version]
+      properties:
+        status: { type: string, const: ok }
+        version: { type: string }
+        uptime_sec: { type: integer, minimum: 0 }
+
+    MetadataResponse:
+      type: object
+      required:
+        - model_version
+        - feature_config_version
+        - scaler_version
+        - feature_names
+        - capabilities
+      properties:
+        model_version: { type: string }
+        feature_config_version: { type: string }
+        scaler_version: { type: string }
+        feature_names:
+          type: array
+          items: { type: string }
+        target:
+          type: string
+          enum: [log_return]
+        supported_quantiles:
+          type: array
+          items: { type: number }
+        max_horizon:
+          type: integer
+        capabilities:
+          type: object
+          required: [return_shap, multi_quantile]
+          properties:
+            return_shap: { type: boolean }
+            multi_quantile: { type: boolean }
+            batch_inference: { type: boolean }
+
+    SchemaResponse:
+      type: object
+      required: [request_schema, response_schema]
+      properties:
+        request_schema:
+          type: object
+          additionalProperties: true
+        response_schema:
+          type: object
+          additionalProperties: true
+
+    ModelPredictRequest:
+      type: object
+      required:
+        - request_id
+        - as_of
+        - horizon
+        - quantiles
+        - target
+        - feature_names
+        - timestamps
+        - X
+        - model_version
+        - feature_config_version
+        - scaler_version
+      properties:
+        request_id: { type: string }
+        as_of: { type: string, format: date }
+        horizon:
+          type: integer
+          minimum: 1
+          maximum: 60
+        quantiles:
+          type: array
+          minItems: 2
+          items:
+            type: number
+            minimum: 0
+            maximum: 1
+        target:
+          type: string
+          enum: [log_return]
+        feature_names:
+          type: array
+          minItems: 1
+          items: { type: string }
+        timestamps:
+          type: array
+          minItems: 1
+          items: { type: string, format: date }
+        X:
+          type: array
+          description: 2D feature matrix aligned with timestamps and feature_names
+          items:
+            type: array
+            items: { type: number }
+        model_version: { type: string }
+        feature_config_version: { type: string }
+        scaler_version: { type: string }
+        options:
+          type: object
+          properties:
+            return_shap: { type: boolean, default: false }
+            shap_topk: { type: integer, default: 15, minimum: 1, maximum: 200 }
+
+    ModelPredictResponse:
+      type: object
+      required:
+        - request_id
+        - model_version
+        - horizon
+        - return_quantiles
+        - confidence_score
+        - risk_level
+        - latency_ms
+      properties:
+        request_id: { type: string }
+        model_version: { type: string }
+        horizon: { type: integer }
+        return_quantiles:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReturnQuantilePoint"
+        confidence_score:
+          type: number
+          minimum: 0
+          maximum: 1
+        risk_level:
+          type: string
+          enum: [LOW, MEDIUM, HIGH]
+        shap:
+          type: [object, "null"]
+          description: Optional SHAP payload
+          properties:
+            top_factors:
+              type: array
+              items:
+                $ref: "#/components/schemas/SHAPItem"
+            base_value: { type: number }
+        warnings:
+          type: array
+          items:
+            $ref: "#/components/schemas/ModelWarning"
+        latency_ms:
+          type: integer
+          minimum: 0
+
+    ReturnQuantilePoint:
+      type: object
+      required: [t]
+      properties:
+        t: { type: integer, minimum: 1 }
+        q05: { type: number }
+        q50: { type: number }
+        q95: { type: number }
+      additionalProperties: false
+
+    SHAPItem:
+      type: object
+      required: [factor, value, shap]
+      properties:
+        factor: { type: string }
+        value: { type: number }
+        shap: { type: number }
+
+    ModelWarning:
+      type: object
+      required: [type, message]
+      properties:
+        type:
+          type: string
+          examples: [FEATURE_MISSING_FILLED, OUT_OF_RANGE_CLIPPED]
+        message: { type: string }
+        details:
+          type: object
+          additionalProperties: true
