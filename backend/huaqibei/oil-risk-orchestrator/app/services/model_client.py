@@ -143,6 +143,11 @@ class ModelClient:
         self._mode = self._detect_mode(self._url)
         self._predict_url = self._build_predict_returns_url(self._url)
 
+    @property
+    def mode(self) -> str:
+        """返回当前调用模式（openai / legacy）。"""
+        return self._mode
+
     def _detect_mode(self, base_url: str) -> str:
         parsed = urlparse(base_url)
         path = (parsed.path or "").rstrip("/")

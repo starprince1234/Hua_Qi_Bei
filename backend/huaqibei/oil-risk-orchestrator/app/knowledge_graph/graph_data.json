@@ -1,0 +1,68 @@
+{
+  "industries": [
+    {
+      "name": "航空运输",
+      "nodes": ["布伦特原油", "航煤价格", "航空公司运营成本", "机票价格", "航空股"],
+      "sensitivity": 0.85,
+      "transmission_direction": "negative"
+    },
+    {
+      "name": "化工行业",
+      "nodes": ["布伦特原油", "石脑油", "乙烯", "塑料原料", "下游化工品"],
+      "sensitivity": 0.78,
+      "transmission_direction": "mixed"
+    },
+    {
+      "name": "交通运输",
+      "nodes": ["布伦特原油", "成品油批发", "物流燃油成本", "运价指数", "物流股"],
+      "sensitivity": 0.72,
+      "transmission_direction": "negative"
+    },
+    {
+      "name": "石油炼化",
+      "nodes": ["布伦特原油", "裂解价差", "炼厂利润率", "成品油产量", "炼化股"],
+      "sensitivity": 0.90,
+      "transmission_direction": "positive"
+    },
+    {
+      "name": "能源电力",
+      "nodes": ["布伦特原油", "天然气价格", "燃油电厂成本", "上网电价", "电力股"],
+      "sensitivity": 0.55,
+      "transmission_direction": "negative"
+    },
+    {
+      "name": "橡胶轮胎",
+      "nodes": ["布伦特原油", "合成橡胶原料", "轮胎生产成本", "汽车配件价格", "轮胎股"],
+      "sensitivity": 0.60,
+      "transmission_direction": "negative"
+    },
+    {
+      "name": "农业化肥",
+      "nodes": ["布伦特原油", "天然气/石脑油", "合成氨成本", "化肥价格", "农化股"],
+      "sensitivity": 0.65,
+      "transmission_direction": "negative"
+    },
+    {
+      "name": "海运航运",
+      "nodes": ["布伦特原油", "船用燃料油", "班轮运营成本", "运价指数", "航运股"],
+      "sensitivity": 0.70,
+      "transmission_direction": "negative"
+    }
+  ],
+  "relationships": [
+    {"source": "布伦特原油", "target": "航煤价格", "weight": 0.92, "lag_days": 0},
+    {"source": "布伦特原油", "target": "石脑油", "weight": 0.88, "lag_days": 0},
+    {"source": "布伦特原油", "target": "成品油批发", "weight": 0.85, "lag_days": 1},
+    {"source": "布伦特原油", "target": "裂解价差", "weight": 0.75, "lag_days": 0},
+    {"source": "布伦特原油", "target": "天然气价格", "weight": 0.45, "lag_days": 3},
+    {"source": "布伦特原油", "target": "合成橡胶原料", "weight": 0.65, "lag_days": 2},
+    {"source": "裂解价差", "target": "炼厂利润率", "weight": 0.90, "lag_days": 0},
+    {"source": "石脑油", "target": "乙烯", "weight": 0.82, "lag_days": 1},
+    {"source": "乙烯", "target": "塑料原料", "weight": 0.78, "lag_days": 2}
+  ],
+  "meta": {
+    "version": "1.0.0",
+    "last_updated": "2025-01-01",
+    "description": "原油价格传导至下游行业的知识图谱数据"
+  }
+}
