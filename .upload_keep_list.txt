@@ -1,0 +1,14 @@
+README.md
+backend/huaqibei/oil-risk-orchestrator/README.md
+backend/huaqibei/oil-risk-orchestrator/app/main.py
+frontend/README.md
+frontend/src/app/globals.css
+frontend/src/app/layout.tsx
+frontend/src/app/page.tsx
+frontend/src/components/FileUploader.tsx
+frontend/src/components/PredictForm.tsx
+frontend/src/components/ResultDisplay.tsx
+frontend/src/components/apiBase.ts
+model-service-openapi.yaml
+orchestratoropenapi.yaml
+测试文件（初始化仓库示例文件）.txt
