@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {"id": "crude_oil",    "label": "国际原油",     "type": "commodity"},
+    {"id": "brent",        "label": "布伦特原油",   "type": "benchmark"},
+    {"id": "wti",          "label": "WTI原油",      "type": "benchmark"},
+    {"id": "opec",         "label": "OPEC",          "type": "organization"},
+    {"id": "geopolitics",  "label": "地缘政治",     "type": "macro"},
+    {"id": "supply",       "label": "全球供应",     "type": "macro"},
+    {"id": "demand",       "label": "全球需求",     "type": "macro"},
+    {"id": "usd",          "label": "美元指数",     "type": "financial"},
+    {"id": "financial_mkt","label": "金融市场",     "type": "financial"},
+    {"id": "aviation",     "label": "航空业",       "type": "industry"},
+    {"id": "shipping",     "label": "航运业",       "type": "industry"},
+    {"id": "chemical",     "label": "化工业",       "type": "industry"},
+    {"id": "refinery",     "label": "炼油环节",     "type": "midstream"},
+    {"id": "natural_gas",  "label": "天然气",       "type": "commodity"},
+    {"id": "renewable",    "label": "可再生能源",   "type": "energy"}
+  ],
+  "edges": [
+    {"source": "opec",        "target": "supply",       "label": "决定产量配额", "weight": 0.9},
+    {"source": "geopolitics", "target": "supply",       "label": "中断供应风险", "weight": 0.8},
+    {"source": "geopolitics", "target": "crude_oil",    "label": "价格溢价",     "weight": 0.7},
+    {"source": "supply",      "target": "crude_oil",    "label": "供需平衡",     "weight": 0.95},
+    {"source": "demand",      "target": "crude_oil",    "label": "需求拉动",     "weight": 0.95},
+    {"source": "usd",         "target": "crude_oil",    "label": "反向定价",     "weight": 0.75},
+    {"source": "financial_mkt","target": "crude_oil",   "label": "投机资金流入", "weight": 0.6},
+    {"source": "crude_oil",   "target": "brent",        "label": "基准价格",     "weight": 1.0},
+    {"source": "crude_oil",   "target": "wti",          "label": "基准价格",     "weight": 1.0},
+    {"source": "brent",       "target": "refinery",     "label": "原料成本",     "weight": 0.9},
+    {"source": "wti",         "target": "refinery",     "label": "原料成本",     "weight": 0.9},
+    {"source": "refinery",    "target": "aviation",     "label": "航空煤油供给", "weight": 0.85},
+    {"source": "refinery",    "target": "shipping",     "label": "船用燃油供给", "weight": 0.8},
+    {"source": "refinery",    "target": "chemical",     "label": "石化原料供给", "weight": 0.9},
+    {"source": "crude_oil",   "target": "natural_gas",  "label": "能源替代关系", "weight": 0.5},
+    {"source": "natural_gas", "target": "chemical",     "label": "替代原料",     "weight": 0.4},
+    {"source": "renewable",   "target": "demand",       "label": "替代需求压制", "weight": 0.45},
+    {"source": "aviation",    "target": "demand",       "label": "燃油消费反馈", "weight": 0.3},
+    {"source": "shipping",    "target": "demand",       "label": "燃油消费反馈", "weight": 0.3},
+    {"source": "chemical",    "target": "demand",       "label": "原料消费反馈", "weight": 0.35}
+  ]
+}
