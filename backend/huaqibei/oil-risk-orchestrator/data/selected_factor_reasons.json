@@ -1,0 +1,42 @@
+{
+  "selected": [
+    {
+      "factor_name": "return_lag_1",
+      "status": "kept",
+      "reason_tags": ["rolling_ic_positive", "lead_lag_confirmed", "low_missing"],
+      "detail": "短期动量在滚动窗口内保持稳定领先，缺失率低。"
+    },
+    {
+      "factor_name": "return_lag_5",
+      "status": "kept",
+      "reason_tags": ["rolling_ic_positive", "stability_passed"],
+      "detail": "中期动量贡献稳定，跨样本期稳健。"
+    },
+    {
+      "factor_name": "macro_dxy",
+      "status": "kept",
+      "reason_tags": ["economic_interpretability", "mrmr_selected"],
+      "detail": "美元指数具备明确经济解释并通过最小冗余筛选。"
+    },
+    {
+      "factor_name": "rolling_std_5",
+      "status": "kept",
+      "reason_tags": ["volatility_proxy", "shap_precheck_top"],
+      "detail": "短期波动因子在预筛模型中贡献显著。"
+    }
+  ],
+  "dropped": [
+    {
+      "factor_name": "macro_unknown_x",
+      "status": "dropped",
+      "reason_tags": ["high_missing_ratio"],
+      "detail": "缺失率超过30%，不满足可用性门槛。"
+    },
+    {
+      "factor_name": "macro_collinear_y",
+      "status": "dropped",
+      "reason_tags": ["high_collinearity"],
+      "detail": "与已选因子相关系数过高（>0.85），冗余被剔除。"
+    }
+  ]
+}

@@ -1,0 +1,852 @@
+openapi: 3.1.0
+info:
+  title: Oil Risk Intelligence Orchestrator API
+  version: 1.0.0
+  description: >
+    Bank-grade oil risk intelligence orchestrator.
+    Responsibilities: upload/validation/repair-log, feature alignment, remote model call,
+    postprocess to future path, risk grading, industry shock mapping, explainability,
+    knowledge-graph paths, constrained report generation.
+servers:
+  - url: http://127.0.0.1:5000/api/v1
+    description: Local dev
+
+tags:
+  - name: Upload
+  - name: Predict
+  - name: Report
+  - name: KnowledgeGraph
+  - name: Factors
+  - name: Health
+
+security:
+  - bearerAuth: []
+
+paths:
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      operationId: healthCheck
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse_Health"
+
+  /upload:
+    post:
+      tags: [Upload]
+      summary: Upload dataset file (csv/xlsx/parquet) with validation and repair-log
+      operationId: uploadDataset
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                dataset_type:
+                  type: string
+                  default: oil_price_factors
+                  description: Dataset type for parsing rules
+                timezone:
+                  type: string
+                  default: UTC
+                frequency:
+                  type: string
+                  enum: [D, W, M]
+                  default: D
+                strict_mode:
+                  type: boolean
+                  default: false
+                  description: If true, do not auto-repair; reject on violations
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      responses:
+        "200":
+          description: Upload accepted with validation, repair-log, preview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse_UploadResult"
+        "400":
+          $ref: "#/components/responses/Error400"
+        "413":
+          $ref: "#/components/responses/Error413"
+        "415":
+          $ref: "#/components/responses/Error415"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /predict:
+    post:
+      tags: [Predict]
+      summary: Orchestrated prediction (calls remote model, postprocess, explain, report)
+      operationId: orchestratedPredict
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PredictRequest"
+            examples:
+              byFileId:
+                summary: Predict by uploaded file_id
+                value:
+                  file_id: file_123
+                  horizon: 10
+                  target: log_return
+                  quantiles: [0.05, 0.5, 0.95]
+                  industries: [aviation, shipping, chemical, refinery, logistics, heavy_manufacturing]
+                  include_explainability: true
+                  include_knowledge_graph: true
+                  include_report: true
+                  report_style: banking
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      responses:
+        "200":
+          description: Prediction + path + risk + industry shock + explainability + KG + report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse_PredictResult"
+        "400":
+          $ref: "#/components/responses/Error400"
+        "422":
+          $ref: "#/components/responses/Error422"
+        "503":
+          $ref: "#/components/responses/Error503"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /report/{report_id}:
+    get:
+      tags: [Report]
+      summary: Get structured report by report_id
+      operationId: getReport
+      parameters:
+        - $ref: "#/components/parameters/ReportId"
+      responses:
+        "200":
+          description: Structured report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse_ReportResult"
+        "404":
+          $ref: "#/components/responses/Error404"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /report/{report_id}/pdf:
+    get:
+      tags: [Report]
+      summary: Download report PDF (optional implementation)
+      operationId: downloadReportPdf
+      parameters:
+        - $ref: "#/components/parameters/ReportId"
+      responses:
+        "200":
+          description: PDF binary
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "404":
+          $ref: "#/components/responses/Error404"
+        "501":
+          $ref: "#/components/responses/Error501"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /report/knowledge-graph/path/{industry}:
+    get:
+      tags: [KnowledgeGraph]
+      summary: Get knowledge-graph transmission path for an industry
+      operationId: getIndustryTransmissionPath
+      parameters:
+        - name: industry
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/Industry"
+      responses:
+        "200":
+          description: Transmission path (nodes + labels + arrow string)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse_KGPath"
+        "404":
+          $ref: "#/components/responses/Error404"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /report/factors:
+    get:
+      tags: [Factors]
+      summary: Get factor dictionary
+      operationId: getFactorDictionary
+      responses:
+        "200":
+          description: Factor list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse_FactorList"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /report/factors/reasons:
+    get:
+      tags: [Factors]
+      summary: Get factor selection reason tags (for 3-layer explanation loop - layer 1)
+      operationId: getFactorSelectionReasonsCatalog
+      responses:
+        "200":
+          description: Reason tags catalog
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIResponse_FactorReasonCatalog"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Client-provided idempotency key for safe retries
+    ReportId:
+      name: report_id
+      in: path
+      required: true
+      schema:
+        type: string
+
+  responses:
+    Error400:
+      description: Bad request / validation error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/APIErrorResponse"
+          examples:
+            validation:
+              value:
+                success: false
+                code: 400
+                message: VALIDATION_ERROR
+                details:
+                  field: date
+                  reason: frequency_mismatch
+                request_id: req_xxx
+    Error404:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/APIErrorResponse"
+          examples:
+            notfound:
+              value:
+                success: false
+                code: 404
+                message: NOT_FOUND
+                details:
+                  resource: report
+                  id: rpt_123
+                request_id: req_xxx
+    Error413:
+      description: Payload too large
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/APIErrorResponse"
+    Error415:
+      description: Unsupported media type
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/APIErrorResponse"
+    Error422:
+      description: Unprocessable (schema ok but semantic error)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/APIErrorResponse"
+          examples:
+            asofLeak:
+              value:
+                success: false
+                code: 422
+                message: ASOF_LEAKAGE
+                details:
+                  dropped_rows: 2
+                  hint: "macro factors published after as_of were removed"
+                request_id: req_xxx
+    Error500:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/APIErrorResponse"
+    Error501:
+      description: Not implemented
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/APIErrorResponse"
+    Error503:
+      description: Model unavailable / timeout
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/APIErrorResponse"
+          examples:
+            modelUnavailable:
+              value:
+                success: false
+                code: 503
+                message: MODEL_UNAVAILABLE
+                details:
+                  upstream: model_service
+                  retry_after_sec: 3
+                request_id: req_xxx
+
+  schemas:
+    # ---------- Envelope ----------
+    APIErrorResponse:
+      type: object
+      required: [success, code, message, request_id]
+      properties:
+        success:
+          type: boolean
+          const: false
+        code:
+          type: integer
+        message:
+          type: string
+          description: Stable business error code
+          examples: [VALIDATION_ERROR, FREQUENCY_MISMATCH, ASOF_LEAKAGE, MODEL_TIMEOUT, MODEL_UNAVAILABLE, REPORT_SCHEMA_INVALID]
+        details:
+          type: object
+          additionalProperties: true
+        request_id:
+          type: string
+
+    APIResponse_Health:
+      type: object
+      required: [success, code, message, data, request_id]
+      properties:
+        success: { type: boolean, const: true }
+        code: { type: integer, const: 200 }
+        message: { type: string, const: success }
+        data:
+          type: object
+          required: [status]
+          properties:
+            status: { type: string, const: ok }
+            version: { type: string }
+        request_id:
+          type: [string, "null"]
+
+    APIResponse_UploadResult:
+      type: object
+      required: [success, code, message, data, request_id]
+      properties:
+        success: { type: boolean, const: true }
+        code: { type: integer, const: 200 }
+        message: { type: string, const: success }
+        data:
+          $ref: "#/components/schemas/UploadResult"
+        request_id:
+          type: [string, "null"]
+
+    APIResponse_PredictResult:
+      type: object
+      required: [success, code, message, data, request_id]
+      properties:
+        success: { type: boolean, const: true }
+        code: { type: integer, const: 200 }
+        message: { type: string, const: success }
+        data:
+          $ref: "#/components/schemas/PredictResult"
+        request_id:
+          type: [string, "null"]
+
+    APIResponse_ReportResult:
+      type: object
+      required: [success, code, message, data, request_id]
+      properties:
+        success: { type: boolean, const: true }
+        code: { type: integer, const: 200 }
+        message: { type: string, const: success }
+        data:
+          $ref: "#/components/schemas/ReportResult"
+        request_id:
+          type: [string, "null"]
+
+    APIResponse_KGPath:
+      type: object
+      required: [success, code, message, data, request_id]
+      properties:
+        success: { type: boolean, const: true }
+        code: { type: integer, const: 200 }
+        message: { type: string, const: success }
+        data:
+          $ref: "#/components/schemas/KGPath"
+        request_id:
+          type: [string, "null"]
+
+    APIResponse_FactorList:
+      type: object
+      required: [success, code, message, data, request_id]
+      properties:
+        success: { type: boolean, const: true }
+        code: { type: integer, const: 200 }
+        message: { type: string, const: success }
+        data:
+          $ref: "#/components/schemas/FactorList"
+        request_id:
+          type: [string, "null"]
+
+    APIResponse_FactorReasonCatalog:
+      type: object
+      required: [success, code, message, data, request_id]
+      properties:
+        success: { type: boolean, const: true }
+        code: { type: integer, const: 200 }
+        message: { type: string, const: success }
+        data:
+          $ref: "#/components/schemas/FactorReasonCatalog"
+        request_id:
+          type: [string, "null"]
+
+    # ---------- Upload ----------
+    UploadResult:
+      type: object
+      required: [file_id, detected_format, validation, repair_log, preview, schema_hint]
+      properties:
+        file_id: { type: string }
+        detected_format:
+          type: string
+          enum: [csv, xlsx, parquet]
+        validation:
+          $ref: "#/components/schemas/ValidationResult"
+        repair_log:
+          type: array
+          items:
+            $ref: "#/components/schemas/RepairLogItem"
+        preview:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        schema_hint:
+          $ref: "#/components/schemas/SchemaHint"
+
+    ValidationResult:
+      type: object
+      required: [passed, row_count]
+      properties:
+        passed: { type: boolean }
+        row_count: { type: integer, minimum: 0 }
+        date_range:
+          type: array
+          minItems: 2
+          maxItems: 2
+          items: { type: string, format: date }
+        frequency_detected:
+          type: string
+          enum: [D, W, M]
+        required_columns_missing:
+          type: array
+          items: { type: string }
+        warnings:
+          type: array
+          items: { type: string }
+
+    RepairLogItem:
+      type: object
+      required: [field, strategy, count, severity]
+      properties:
+        field: { type: string }
+        strategy:
+          type: string
+          examples: [ffill, bfill, mean_impute, clip_outliers_p99, drop_rows]
+        count: { type: integer, minimum: 0 }
+        severity:
+          type: string
+          enum: [info, warning, error]
+        before_after_sample:
+          type: object
+          additionalProperties: true
+
+    SchemaHint:
+      type: object
+      required: [required_columns, optional_columns]
+      properties:
+        required_columns:
+          type: array
+          items: { type: string }
+        optional_columns:
+          type: array
+          items: { type: string }
+
+    # ---------- Predict ----------
+    PredictRequest:
+      type: object
+      required: [horizon, quantiles]
+      properties:
+        file_id:
+          type: string
+          description: Prefer using file_id obtained from /upload
+        oil_data:
+          type: array
+          description: Inline records (debug only)
+          items:
+            type: object
+            additionalProperties: true
+        horizon:
+          type: integer
+          minimum: 1
+          maximum: 60
+        target:
+          type: string
+          enum: [log_return]
+          default: log_return
+        quantiles:
+          type: array
+          minItems: 2
+          items:
+            type: number
+            minimum: 0
+            maximum: 1
+        industries:
+          type: array
+          items:
+            $ref: "#/components/schemas/Industry"
+        include_explainability:
+          type: boolean
+          default: true
+        include_knowledge_graph:
+          type: boolean
+          default: true
+        include_report:
+          type: boolean
+          default: true
+        report_style:
+          type: string
+          enum: [banking, concise, verbose]
+          default: banking
+        strict_mode:
+          type: boolean
+          default: false
+
+    PredictResult:
+      type: object
+      required:
+        - prediction
+        - future_path
+        - shock_signal
+        - explainability
+        - knowledge_graph
+        - factor_selection_reasons
+        - report
+        - data_processing_log
+      properties:
+        prediction:
+          $ref: "#/components/schemas/PredictionSummary"
+        future_path:
+          type: array
+          items:
+            $ref: "#/components/schemas/FuturePathPoint"
+        shock_signal:
+          $ref: "#/components/schemas/ShockSignal"
+        explainability:
+          $ref: "#/components/schemas/ExplainabilityBlock"
+        knowledge_graph:
+          $ref: "#/components/schemas/KnowledgeGraphBlock"
+        factor_selection_reasons:
+          $ref: "#/components/schemas/FactorSelectionReasons"
+        report:
+          $ref: "#/components/schemas/ReportResult"
+        data_processing_log:
+          $ref: "#/components/schemas/DataProcessingLog"
+
+    PredictionSummary:
+      type: object
+      required: [horizon, return_quantiles, confidence_score, risk_level, model_version]
+      properties:
+        horizon: { type: integer }
+        return_quantiles:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReturnQuantilePoint"
+        confidence_score:
+          type: number
+          minimum: 0
+          maximum: 1
+        risk_level:
+          type: string
+          enum: [LOW, MEDIUM, HIGH]
+        model_version: { type: string }
+        feature_config_version: { type: string }
+        scaler_version: { type: string }
+
+    ReturnQuantilePoint:
+      type: object
+      required: [t]
+      properties:
+        t: { type: integer, minimum: 1 }
+        q05: { type: number }
+        q50: { type: number }
+        q95: { type: number }
+      additionalProperties: false
+
+    FuturePathPoint:
+      type: object
+      required: [date, price_q05, price_q50, price_q95]
+      properties:
+        date: { type: string, format: date }
+        price_q05: { type: number }
+        price_q50: { type: number }
+        price_q95: { type: number }
+
+    ShockSignal:
+      type: object
+      required: [heatmap, alerts]
+      properties:
+        heatmap:
+          type: array
+          items:
+            $ref: "#/components/schemas/IndustryImpactItem"
+        alerts:
+          type: array
+          items: { type: string }
+
+    IndustryImpactItem:
+      type: object
+      required: [industry, risk, score, direction]
+      properties:
+        industry:
+          $ref: "#/components/schemas/Industry"
+        risk:
+          type: string
+          enum: [LOW, MEDIUM, HIGH]
+        score:
+          type: number
+          minimum: 0
+          maximum: 1
+        direction:
+          type: string
+          enum: [COST_UP, COST_DOWN, DEMAND_UP, DEMAND_DOWN, MARGIN_UP, MARGIN_DOWN, MIXED]
+
+    ExplainabilityBlock:
+      type: object
+      required: [top_factors]
+      properties:
+        top_factors:
+          type: array
+          items:
+            $ref: "#/components/schemas/FactorContribution"
+        shap_values:
+          type: [object, "null"]
+          additionalProperties: true
+        notes:
+          type: array
+          items: { type: string }
+
+    FactorContribution:
+      type: object
+      required: [factor, contribution, direction]
+      properties:
+        factor: { type: string }
+        contribution: { type: number }
+        direction:
+          type: string
+          enum: [POS, NEG, MIXED]
+
+    KnowledgeGraphBlock:
+      type: object
+      required: [paths]
+      properties:
+        paths:
+          type: array
+          items:
+            $ref: "#/components/schemas/KGPath"
+
+    KGPath:
+      type: object
+      required: [industry, path_nodes, path_labels, arrow_path]
+      properties:
+        industry:
+          $ref: "#/components/schemas/Industry"
+        path_nodes:
+          type: array
+          items: { type: string }
+        path_labels:
+          type: array
+          items: { type: string }
+        arrow_path:
+          type: string
+
+    FactorSelectionReasons:
+      type: object
+      required: [selected, rejected]
+      properties:
+        selected:
+          type: array
+          items:
+            $ref: "#/components/schemas/FactorReasonItem"
+        rejected:
+          type: array
+          items:
+            $ref: "#/components/schemas/FactorReasonItem"
+
+    FactorReasonItem:
+      type: object
+      required: [factor, reason_tag]
+      properties:
+        factor: { type: string }
+        reason_tag: { type: string }
+        evidence:
+          type: object
+          additionalProperties: true
+
+    DataProcessingLog:
+      type: object
+      required: [validation_summary, repairs, asof_alignment]
+      properties:
+        validation_summary:
+          type: object
+          additionalProperties: true
+        repairs:
+          type: array
+          items:
+            $ref: "#/components/schemas/RepairLogItem"
+        asof_alignment:
+          type: object
+          required: [enabled]
+          properties:
+            enabled: { type: boolean }
+            dropped_rows: { type: integer, minimum: 0 }
+            reason: { type: string }
+
+    # ---------- Report ----------
+    ReportResult:
+      type: object
+      required: [report_id, schema_version, sections]
+      properties:
+        report_id: { type: string }
+        schema_version:
+          type: string
+          const: risk_report_v1
+        sections:
+          $ref: "#/components/schemas/RiskReportSections"
+        provenance:
+          type: object
+          additionalProperties: true
+          description: Optional fields like llm_model, temperature, generation_mode(template/llm)
+
+    RiskReportSections:
+      type: object
+      required:
+        - executive_summary
+        - trend_and_confidence
+        - key_drivers
+        - industry_impacts
+        - risks_and_limits
+      properties:
+        executive_summary: { type: string }
+        trend_and_confidence: { type: string }
+        key_drivers: { type: string }
+        industry_impacts:
+          type: array
+          items:
+            $ref: "#/components/schemas/IndustryReportItem"
+        risks_and_limits: { type: string }
+
+    IndustryReportItem:
+      type: object
+      required: [industry, risk_point, reason, action]
+      properties:
+        industry:
+          $ref: "#/components/schemas/Industry"
+        risk_point: { type: string }
+        reason: { type: string }
+        action: { type: string }
+
+    # ---------- Factors ----------
+    FactorList:
+      type: object
+      required: [total, factors]
+      properties:
+        total: { type: integer }
+        factors:
+          type: array
+          items:
+            $ref: "#/components/schemas/FactorDefinition"
+
+    FactorDefinition:
+      type: object
+      required: [factor_name, name_cn, category, definition, unit]
+      properties:
+        factor_name: { type: string }
+        name_cn: { type: string }
+        category: { type: string }
+        definition: { type: string }
+        unit: { type: string }
+
+    FactorReasonCatalog:
+      type: object
+      required: [total, reason_tags]
+      properties:
+        total: { type: integer }
+        reason_tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReasonTagDefinition"
+
+    ReasonTagDefinition:
+      type: object
+      required: [reason_tag, name_cn, description]
+      properties:
+        reason_tag: { type: string }
+        name_cn: { type: string }
+        description: { type: string }
+        severity:
+          type: string
+          enum: [info, warning, error]
+
+    # ---------- Enums ----------
+    Industry:
+      type: string
+      enum:
+        - aviation
+        - shipping
+        - chemical
+        - refinery
+        - logistics
+        - heavy_manufacturing

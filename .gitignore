@@ -1,0 +1,105 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor and local workspace files
+.idea/
+.vscode/
+*.code-workspace
+frontend/.git.local-backup/
+
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+htmlcov/
+
+# Node / Next.js
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+
+# Logs and runtime output
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+!.env.example
+!**/.env.example
+
+# Secrets, certificates, and private keys
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+id_rsa
+id_rsa.*
+*.pub
+
+# Local databases and dumps
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.sql
+
+# Docker and deployment local state
+.docker/
+docker-compose.override.yml
+
+# Temporary scripts and local diagnostics
+tmp_*
+remote_*.txt
+test.py
+test1.xlsx
+
+# Local business data / generated reports: confirm before committing samples
+*.xlsx
+*.xls
+*.docx
+*.doc
+*.tsv
+
+# Confirmed project deliverables / sample analysis files
+!test1.xlsx
+!汇总.xlsx
+!因子贡献度分析.xlsx
+!项目技术路线.docx
+!多周期预测结果_03141637.xlsx
+
+# Keep source documentation templates and API specs
+!README.md
+!LICENSE
+!*.example.*
+!*.example
+!*.yaml
+!*.yml
+!docs/**/*.md
+!deploy/**/*.md
