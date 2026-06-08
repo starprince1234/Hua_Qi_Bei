@@ -84,9 +84,9 @@ services:
   mihomo:
     image: metacubex/mihomo:${MIHOMO_TAG:-v1.19.27}
     restart: unless-stopped
-    command: ["-d", "/mihomo", "-f", "/mihomo/config.yaml"]
+    command: ["-d", "/mihomo", "-f", "/mihomo/config.docker.yaml"]
     volumes:
-      - ${MIHOMO_CONFIG_PATH:-/opt/mihomo/config.yaml}:/mihomo/config.yaml:ro
+      - ${MIHOMO_CONFIG_DIR:-/opt/mihomo}:/mihomo:ro
     expose:
       - "7890"
     networks:
