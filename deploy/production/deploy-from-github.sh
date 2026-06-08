@@ -44,6 +44,7 @@ for key, value in secrets.items():
 : "${REPO_URL:?REPO_URL is required}"
 : "${DEPLOY_BRANCH:=main}"
 : "${DEPLOY_PATH:=/opt/huaqibei/app}"
+: "${IMAGE_ARCHIVE:=/tmp/huaqibei-images.tar}"
 
 mkdir -p "$(dirname "$DEPLOY_PATH")"
 
@@ -61,9 +62,11 @@ fi
 
 cd "$DEPLOY_PATH"
 
-docker compose -f deploy/production/docker-compose.prod.yml build
+if [ -f "$IMAGE_ARCHIVE" ]; then
+  docker load -i "$IMAGE_ARCHIVE"
+fi
 
-docker compose -f deploy/production/docker-compose.prod.yml up -d --remove-orphans
+docker compose -f deploy/production/docker-compose.prod.yml up -d --no-build --remove-orphans
 
 docker image prune -f --filter "until=168h" >/dev/null || true
 
