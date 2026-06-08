@@ -1,0 +1,60 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: huaqibei-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_PRD }}
+      CI_DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN_PRD }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Doppler CLI
+        run: |
+          curl -Ls https://cli.doppler.com/install.sh | sudo sh
+
+      - name: Install SSH helper
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+      - name: Deploy over SSH
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          doppler run --project huaqibei --config prd -- bash <<'INNER'
+          set -euo pipefail
+
+          : "${DEPLOY_HOST:?DEPLOY_HOST is required in Doppler prd}"
+          : "${DEPLOY_USER:?DEPLOY_USER is required in Doppler prd}"
+          : "${DEPLOY_PASSWORD:?DEPLOY_PASSWORD is required in Doppler prd}"
+          : "${DEPLOY_PORT:=22}"
+          : "${REPO_URL:?REPO_URL is required in Doppler prd}"
+          : "${DEPLOY_BRANCH:=main}"
+          : "${DEPLOY_PATH:=/opt/huaqibei/app}"
+          : "${DOPPLER_TOKEN:?DOPPLER_TOKEN is required}"
+
+          printf -v remote_env 'DOPPLER_TOKEN=%q REPO_URL=%q DEPLOY_BRANCH=%q DEPLOY_PATH=%q' \
+            "$CI_DOPPLER_TOKEN" "$REPO_URL" "$DEPLOY_BRANCH" "$DEPLOY_PATH"
+
+          sshpass -p "$DEPLOY_PASSWORD" ssh \
+            -o StrictHostKeyChecking=accept-new \
+            -o ServerAliveInterval=30 \
+            -p "$DEPLOY_PORT" \
+            "$DEPLOY_USER@$DEPLOY_HOST" \
+            "$remote_env bash -s" < deploy/production/deploy-from-github.sh
+          INNER

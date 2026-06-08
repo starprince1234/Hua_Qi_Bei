@@ -36,12 +36,37 @@ curl -i -X POST http://localhost:18000/model/v1/predict/returns \
 
 ## 2) 本地一键启动（Docker Desktop）
 在项目根目录执行：
-```bash
-docker compose up -d --build
+```powershell
+doppler run -- powershell -ExecutionPolicy Bypass -File .\scripts\start_autodl_tunnel.ps1
+doppler run -- docker compose up -d --build
 docker compose ps
 ```
 - 前端：http://localhost:13000
 - 后端：http://localhost:18000
+- 模型隧道：http://127.0.0.1:6006；容器内通过 `http://host.docker.internal:6006/v1` 访问。
+
+如果 Windows 把 `13000` 放进 excluded port range，本地 compose 使用 Doppler 字段 `FRONTEND_PORT`，默认 `13289`。
+
+本地 Docker 会从 Doppler 注入 `MODEL_API_URL`、`USE_MOCK_MODEL` 和 `AUTODL_*`，不要创建 `.env` 保存真实密码。
+
+### Doppler 字段（本地 dev_personal）
+
+| Key | 推荐值/来源 |
+| --- | --- |
+| `USE_MOCK_MODEL` | `false`，让上传 Excel 后调用 AutoDL 真实模型 |
+| `MODEL_API_URL` | `http://host.docker.internal:6006/v1` |
+| `MODEL_API_TIMEOUT` | `120` |
+| `MODEL_API_MAX_RETRIES` | `2` |
+| `MODEL_API_KEY` | 模型服务如果不需要鉴权可留空 |
+| `MODEL_API_MODEL_ID` | `oil_vol_model` |
+| `AUTODL_SSH_HOST` | AutoDL SSH 命令里的主机，如 `region-9.autodl.pro` |
+| `AUTODL_SSH_PORT` | AutoDL SSH 命令里的端口，如 `50954` |
+| `AUTODL_SSH_USER` | AutoDL SSH 命令里的用户，如 `root` |
+| `AUTODL_SSH_PASSWORD` | AutoDL SSH 密码，只放 Doppler |
+| `AUTODL_LOCAL_PORT` | `6006` |
+| `AUTODL_REMOTE_HOST` | `127.0.0.1` |
+| `AUTODL_REMOTE_PORT` | 远端模型实际监听端口，通常 `6006` |
+| `AUTODL_PLINK_PATH` | Windows PuTTY plink 路径，如 `D:\PuTTY\plink.exe` |
 
 ---
 
@@ -54,7 +79,7 @@ curl -i http://localhost:18000/model/v1/health
 上传+预测+报告（PowerShell 示例，Windows）。请把 `sample.csv` 替换为本地测试数据文件，不要使用或提交含敏感业务数据的真实文件：
 ```powershell
 $upload = curl.exe -s -X POST "http://localhost:18000/api/v1/upload" `
-  -F "file=@sample.csv" `
+  -F "file=@D:\VScodeProjects\Hua_Qi_Bei\test1.xlsx" `
   -F "dataset_type=oil_price_factors" -F "timezone=UTC" -F "frequency=D" `
   -F "strict_mode=false" -F "encoding=utf-8" | ConvertFrom-Json
 

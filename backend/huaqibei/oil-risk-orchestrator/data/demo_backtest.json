@@ -1,0 +1,47 @@
+{
+  "target": "Brent",
+  "window": "2015-01-01/2025-12-31",
+  "metrics": {
+    "direction_accuracy": 0.723,
+    "rmse": 3.21,
+    "mape": 0.048,
+    "interval_hit_rate": {
+      "high": 0.85,
+      "medium": 0.76,
+      "low": 0.8
+    }
+  },
+  "stage_metrics": [
+    { "stage": "平稳期（2015-2019）", "direction_accuracy": 0.78, "rmse": 2.1 },
+    { "stage": "高波动期（2020-2022）", "direction_accuracy": 0.65, "rmse": 5.8 },
+    { "stage": "恢复期（2023-2025）", "direction_accuracy": 0.74, "rmse": 3.0 }
+  ],
+  "points": [
+    { "date": "2022-01-31", "actual_price": 89.26, "predicted_price": 87.90, "lower_price": 83.40, "upper_price": 92.80 },
+    { "date": "2022-02-24", "actual_price": 96.84, "predicted_price": 94.21, "lower_price": 89.30, "upper_price": 101.70 },
+    { "date": "2022-03-31", "actual_price": 107.91, "predicted_price": 103.40, "lower_price": 95.60, "upper_price": 112.30 },
+    { "date": "2022-04-30", "actual_price": 109.34, "predicted_price": 106.20, "lower_price": 98.10, "upper_price": 115.40 },
+    { "date": "2022-05-31", "actual_price": 115.60, "predicted_price": 111.80, "lower_price": 103.90, "upper_price": 121.50 },
+    { "date": "2022-06-30", "actual_price": 114.81, "predicted_price": 112.10, "lower_price": 103.20, "upper_price": 122.90 },
+    { "date": "2022-07-31", "actual_price": 103.97, "predicted_price": 105.40, "lower_price": 96.80, "upper_price": 114.60 },
+    { "date": "2022-08-31", "actual_price": 96.49, "predicted_price": 99.20, "lower_price": 91.50, "upper_price": 107.10 },
+    { "date": "2022-09-30", "actual_price": 88.90, "predicted_price": 91.70, "lower_price": 84.40, "upper_price": 99.80 },
+    { "date": "2022-10-31", "actual_price": 93.33, "predicted_price": 90.60, "lower_price": 83.20, "upper_price": 98.90 },
+    { "date": "2022-11-30", "actual_price": 85.43, "predicted_price": 88.20, "lower_price": 80.90, "upper_price": 96.10 },
+    { "date": "2022-12-31", "actual_price": 80.92, "predicted_price": 83.10, "lower_price": 76.40, "upper_price": 90.20 }
+  ],
+  "events": [
+    { "date": "2020-04-20", "label": "WTI 负油价", "hit_interval": false, "actual_return_7d": -0.182, "predicted_return_7d": -0.094 },
+    { "date": "2022-02-24", "label": "俄乌战争爆发", "hit_interval": true, "actual_return_7d": 0.097, "predicted_return_7d": 0.082 },
+    { "date": "2023-10-07", "label": "巴以冲突升级", "hit_interval": true, "actual_return_7d": 0.041, "predicted_return_7d": 0.036 }
+  ],
+  "bins": [
+    { "range": "-7~-5", "count": 5 },
+    { "range": "-5~-3", "count": 12 },
+    { "range": "-3~-1", "count": 38 },
+    { "range": "-1~1", "count": 96 },
+    { "range": "1~3", "count": 42 },
+    { "range": "3~5", "count": 15 },
+    { "range": "5~7", "count": 6 }
+  ]
+}

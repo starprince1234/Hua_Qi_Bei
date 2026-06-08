@@ -59,6 +59,7 @@ from app.core.logger import get_logger
 from app.utils.json_utils import generate_request_id
 from app.core.errors import BusinessError, BusinessErrorCode
 from app.core.settings import settings
+from app.repositories.runtime_intelligence import runtime_intelligence_store
 
 logger = get_logger(__name__)
 
@@ -479,6 +480,7 @@ async def predict(
         ),
     )
 
+    runtime_intelligence_store.record_prediction(payload)
     logger.info(f"[{request_id}] 预测完成 risk={risk_assessment.level.value}")
 
     response = APIResponse.ok(data=payload.model_dump())

@@ -21,7 +21,7 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator, Any
 import json
 
-from app.api.routes import predict, upload, report, health, model_service_placeholder
+from app.api.routes import predict, upload, report, health, model_service_placeholder, events, backtest, factor_history, overview
 from app.core.settings import settings
 from app.core.logger import get_logger
 from app.schemas.report_schema import APIResponse, ErrorResponse
@@ -168,6 +168,10 @@ def create_app() -> FastAPI:
     app.include_router(predict.router, prefix="/api/v1")
     app.include_router(upload.router, prefix="/api/v1")
     app.include_router(report.router, prefix="/api/v1")
+    app.include_router(events.router, prefix="/api/v1")
+    app.include_router(backtest.router, prefix="/api/v1")
+    app.include_router(factor_history.router, prefix="/api/v1")
+    app.include_router(overview.router, prefix="/api/v1")
     app.include_router(model_service_placeholder.router)
 
     # 根路径重定向到文档

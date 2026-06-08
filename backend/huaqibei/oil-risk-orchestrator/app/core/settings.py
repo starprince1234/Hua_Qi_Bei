@@ -11,12 +11,19 @@
     - 在此文件中写数据处理
 """
 
-from pydantic_settings import BaseSettings
-from typing import Optional
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import ClassVar
 
 
 class Settings(BaseSettings):
     """全局系统配置，所有配置项均可通过环境变量覆盖。"""
+
+    model_config: ClassVar[SettingsConfigDict] = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=True,
+        extra="ignore",  # 忽略 .env 中未声明的字段（如 USE_MOCK_MODEL）
+    )
 
     # ─── 应用基础信息 ──────────────────────────────────────────────
     APP_NAME: str = "Oil Risk Intelligence Orchestrator"
@@ -28,11 +35,20 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8000
 
+    # ─── 新闻与数据库配置 ──────────────────────────────────────────
+    DATABASE_URL: str | None = None
+    NEWS_PROVIDER: str = "mock"
+    NEWS_REFRESH_INTERVAL_MINUTES: int = 30
+    GDELT_BIGQUERY_PROJECT_ID: str | None = None
+    GDELT_GOOGLE_CREDENTIALS_JSON: str | None = None
+    GDELT_BIGQUERY_MAX_BYTES_BILLED: int = 1_073_741_824
+    NEWSAPI_API_KEY: str | None = None
+
     # ─── 云端模型 API 配置 ──────────────────────────────────────────
     MODEL_API_URL: str = "http://localhost:9000/predict/returns"
     MODEL_API_TIMEOUT: int = 30          # 秒
     MODEL_API_MAX_RETRIES: int = 3
-    MODEL_API_KEY: Optional[str] = None  # Bearer Token，可选
+    MODEL_API_KEY: str | None = None  # Bearer Token，可选
     MODEL_API_MODEL_ID: str = "oil_vol_model"
 
     # ─── LLM 报告生成配置（Provider 可切换） ────────────────────────
@@ -41,7 +57,7 @@ class Settings(BaseSettings):
     LLM_API_KEY: str = ""
     LLM_MODEL_ID: str = "Pro/deepseek-ai/DeepSeek-V3.2"
     LLM_JSON_MODE: bool = True
-    LLM_LORA_ID: Optional[str] = None
+    LLM_LORA_ID: str | None = None
     LLM_SEARCH_DISABLE: bool = True
     LLM_MAX_TOKENS: int = 1500
     LLM_TEMPERATURE: float = 0.3
@@ -122,13 +138,6 @@ class Settings(BaseSettings):
 
     # ─── CORS 配置 ─────────────────────────────────────────────────
     ALLOWED_ORIGINS: list[str] = ["*"]
-
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = True
-        extra = "ignore"  # 忽略 .env 中未声明的字段（如 USE_MOCK_MODEL）
-
 
 # 全局单例
 settings = Settings()

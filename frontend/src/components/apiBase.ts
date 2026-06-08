@@ -1,4 +1,4 @@
-const DEFAULT_API_BASE = '/api';
+const DEFAULT_API_BASE = '/api/v1';
 
 function trimTrailingSlash(value: string): string {
   return value.replace(/\/+$/, '');
@@ -13,7 +13,13 @@ export function getApiBasePath(): string {
   const normalized = trimTrailingSlash(rawBase);
 
   if (normalized.startsWith('/')) {
-    return normalized.endsWith('/api/v1') ? normalized.slice(0, -3) : normalized;
+    if (normalized.endsWith('/api/v1')) {
+      return normalized;
+    }
+    if (normalized.endsWith('/api')) {
+      return `${normalized}/v1`;
+    }
+    return `${normalized}/api/v1`;
   }
 
   try {
@@ -22,15 +28,15 @@ export function getApiBasePath(): string {
     const origin = `${parsed.protocol}//${parsed.host}`;
 
     if (!path || path === '/') {
-      return `${origin}/api`;
+      return `${origin}/api/v1`;
     }
     if (path.endsWith('/api/v1')) {
-      return `${origin}${path.slice(0, -3)}`;
-    }
-    if (path.endsWith('/api')) {
       return `${origin}${path}`;
     }
-    return `${origin}${path}/api`;
+    if (path.endsWith('/api')) {
+      return `${origin}${path}/v1`;
+    }
+    return `${origin}${path}/api/v1`;
   } catch {
     return DEFAULT_API_BASE;
   }

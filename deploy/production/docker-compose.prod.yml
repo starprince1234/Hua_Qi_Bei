@@ -2,17 +2,40 @@ name: HUAQIBEI_PROD
 
 services:
   backend:
-    image: starprince123/huaqibei-backend:${BACKEND_TAG:-v1}
+    image: huaqibei-backend:${BACKEND_TAG:-prd}
+    build:
+      context: ../../backend/huaqibei/oil-risk-orchestrator
+      dockerfile: docker/Dockerfile
     restart: unless-stopped
     environment:
       - ENVIRONMENT=production
-      - USE_MOCK_MODEL=false
+      - USE_MOCK_MODEL=${USE_MOCK_MODEL:-false}
       - MODEL_API_URL=${MODEL_API_URL}
       - MODEL_API_KEY=${MODEL_API_KEY:-}
       - MODEL_API_MODEL_ID=${MODEL_API_MODEL_ID:-oil_vol_model}
+      - MODEL_API_TIMEOUT=${MODEL_API_TIMEOUT:-120}
+      - MODEL_API_MAX_RETRIES=${MODEL_API_MAX_RETRIES:-2}
+      - LLM_PROVIDER=${LLM_PROVIDER:-siliconflow}
       - LLM_API_KEY=${LLM_API_KEY:-}
-      - LLM_BASE_URL=${LLM_BASE_URL:-}
-      - LLM_MODEL_ID=${LLM_MODEL_ID:-}
+      - LLM_BASE_URL=${LLM_BASE_URL:-https://api.siliconflow.cn/v1}
+      - LLM_MODEL_ID=${LLM_MODEL_ID:-Pro/deepseek-ai/DeepSeek-V3.2}
+      - LLM_JSON_MODE=${LLM_JSON_MODE:-true}
+      - LLM_ENABLE_THINKING=${LLM_ENABLE_THINKING:-false}
+      - LLM_THINKING_BUDGET=${LLM_THINKING_BUDGET:-4096}
+      - LLM_TOP_P=${LLM_TOP_P:-0.7}
+      - LLM_TOP_K=${LLM_TOP_K:-50}
+      - LLM_FREQUENCY_PENALTY=${LLM_FREQUENCY_PENALTY:-0.2}
+      - LLM_MAX_TOKENS=${LLM_MAX_TOKENS:-1500}
+      - LLM_TEMPERATURE=${LLM_TEMPERATURE:-0.3}
+      - LLM_TIMEOUT=${LLM_TIMEOUT:-60}
+      - LLM_MAX_RETRIES=${LLM_MAX_RETRIES:-1}
+      - DATABASE_URL=${DATABASE_URL:-}
+      - NEWS_PROVIDER=${NEWS_PROVIDER:-hybrid}
+      - NEWS_REFRESH_INTERVAL_MINUTES=${NEWS_REFRESH_INTERVAL_MINUTES:-30}
+      - GDELT_BIGQUERY_PROJECT_ID=${GDELT_BIGQUERY_PROJECT_ID:-}
+      - GDELT_GOOGLE_CREDENTIALS_JSON=${GDELT_GOOGLE_CREDENTIALS_JSON:-}
+      - GDELT_BIGQUERY_MAX_BYTES_BILLED=${GDELT_BIGQUERY_MAX_BYTES_BILLED:-1073741824}
+      - NEWSAPI_API_KEY=${NEWSAPI_API_KEY:-}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     expose:
@@ -21,7 +44,12 @@ services:
       - huaqibei-net
 
   frontend:
-    image: starprince123/huaqibei-frontend:${FRONTEND_TAG:-v1}
+    image: huaqibei-frontend:${FRONTEND_TAG:-prd}
+    build:
+      context: ../../frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
     restart: unless-stopped
     environment:
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-/api}
@@ -41,7 +69,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./certs:/etc/nginx/certs:ro
+      - ${CERTS_DIR:-./certs}:/etc/nginx/certs:ro
     networks:
       - huaqibei-net
 

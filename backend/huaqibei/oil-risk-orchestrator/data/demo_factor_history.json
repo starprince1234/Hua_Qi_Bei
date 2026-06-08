@@ -1,0 +1,17 @@
+{
+  "categories": ["inventory", "geo", "macro", "supply_demand", "technical"],
+  "points": [
+    { "date": "2022-01-31", "inventory": 0.24, "geo": 0.22, "macro": 0.18, "supply_demand": 0.21, "technical": 0.15, "event_label": "OPEC+ 增产节奏谨慎", "predicted_return_7d": 0.026, "lower_return_7d": -0.011, "upper_return_7d": 0.071, "actual_return_7d": 0.034, "hit_interval": true },
+    { "date": "2022-02-24", "inventory": 0.18, "geo": 0.48, "macro": 0.15, "supply_demand": 0.12, "technical": 0.07, "event_label": "俄乌战争爆发", "predicted_return_7d": 0.082, "lower_return_7d": 0.031, "upper_return_7d": 0.145, "actual_return_7d": 0.097, "hit_interval": true },
+    { "date": "2022-03-31", "inventory": 0.16, "geo": 0.44, "macro": 0.14, "supply_demand": 0.18, "technical": 0.08, "event_label": "欧洲制裁预期升温", "predicted_return_7d": 0.052, "lower_return_7d": 0.012, "upper_return_7d": 0.116, "actual_return_7d": 0.061, "hit_interval": true },
+    { "date": "2022-04-30", "inventory": 0.20, "geo": 0.35, "macro": 0.17, "supply_demand": 0.20, "technical": 0.08, "event_label": "战略储备释放讨论", "predicted_return_7d": -0.018, "lower_return_7d": -0.071, "upper_return_7d": 0.035, "actual_return_7d": -0.012, "hit_interval": true },
+    { "date": "2022-05-31", "inventory": 0.17, "geo": 0.33, "macro": 0.15, "supply_demand": 0.27, "technical": 0.08, "event_label": "夏季需求预期增强", "predicted_return_7d": 0.044, "lower_return_7d": 0.003, "upper_return_7d": 0.098, "actual_return_7d": 0.052, "hit_interval": true },
+    { "date": "2022-06-30", "inventory": 0.19, "geo": 0.29, "macro": 0.24, "supply_demand": 0.19, "technical": 0.09, "event_label": "加息预期压制风险资产", "predicted_return_7d": -0.032, "lower_return_7d": -0.088, "upper_return_7d": 0.019, "actual_return_7d": -0.041, "hit_interval": true },
+    { "date": "2022-07-31", "inventory": 0.23, "geo": 0.22, "macro": 0.26, "supply_demand": 0.18, "technical": 0.11, "event_label": "衰退交易升温", "predicted_return_7d": -0.046, "lower_return_7d": -0.101, "upper_return_7d": 0.007, "actual_return_7d": -0.052, "hit_interval": true },
+    { "date": "2022-08-31", "inventory": 0.27, "geo": 0.19, "macro": 0.24, "supply_demand": 0.18, "technical": 0.12, "event_label": "库存累积压力显现", "predicted_return_7d": -0.029, "lower_return_7d": -0.076, "upper_return_7d": 0.022, "actual_return_7d": -0.033, "hit_interval": true },
+    { "date": "2022-09-30", "inventory": 0.25, "geo": 0.20, "macro": 0.29, "supply_demand": 0.16, "technical": 0.10, "event_label": "美元指数阶段新高", "predicted_return_7d": -0.038, "lower_return_7d": -0.092, "upper_return_7d": 0.011, "actual_return_7d": -0.044, "hit_interval": true },
+    { "date": "2022-10-31", "inventory": 0.18, "geo": 0.25, "macro": 0.20, "supply_demand": 0.29, "technical": 0.08, "event_label": "OPEC+ 宣布减产", "predicted_return_7d": 0.056, "lower_return_7d": 0.009, "upper_return_7d": 0.119, "actual_return_7d": 0.063, "hit_interval": true },
+    { "date": "2022-11-30", "inventory": 0.28, "geo": 0.17, "macro": 0.22, "supply_demand": 0.21, "technical": 0.12, "event_label": "需求下修与库存增加", "predicted_return_7d": -0.034, "lower_return_7d": -0.081, "upper_return_7d": 0.016, "actual_return_7d": -0.039, "hit_interval": true },
+    { "date": "2022-12-31", "inventory": 0.26, "geo": 0.18, "macro": 0.21, "supply_demand": 0.20, "technical": 0.15, "event_label": "年末流动性下降", "predicted_return_7d": -0.012, "lower_return_7d": -0.052, "upper_return_7d": 0.036, "actual_return_7d": -0.018, "hit_interval": true }
+  ]
+}

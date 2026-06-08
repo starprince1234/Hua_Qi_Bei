@@ -46,12 +46,14 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Environment files
+# Doppler & Env Security
+.doppler.yaml
 .env
-.env.local
-.env.*.local
+.env.*
 !.env.example
+!.env.*.example
 !**/.env.example
+!**/.env.*.example
 
 # Secrets, certificates, and private keys
 *.pem
@@ -103,3 +105,8 @@ test1.xlsx
 !*.yml
 !docs/**/*.md
 !deploy/**/*.md
+.omo/
+.playwright-mcp/
+task-15*
+.serena/
+.tmp/
