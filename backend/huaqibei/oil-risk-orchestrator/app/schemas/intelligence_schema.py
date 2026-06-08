@@ -82,6 +82,9 @@ class BacktestSummaryResponse(BaseModel):
     metrics: BacktestMetrics = Field(..., description="Aggregate metrics")
     stage_metrics: list[BacktestStageMetric] = Field(..., description="Metrics by market regime")
     provider_status: str = Field(default="online_empty", description="Backtest data provider status")
+    run_id: str | None = Field(default=None, description="Stable validation run identifier")
+    model_version: str | None = Field(default=None, description="Model or baseline version used for validation")
+    updated_at: str | None = Field(default=None, description="Validation payload generation time")
     required_fields: list[str] = Field(default_factory=list, description="Missing fields required to compute a real backtest")
     message: str | None = Field(default=None, description="Human-readable availability note")
 
@@ -111,6 +114,9 @@ class BacktestSeriesResponse(BaseModel):
 
     points: list[BacktestSeriesPoint] = Field(..., description="Backtest series points")
     events: list[BacktestEventMark] = Field(..., description="Annotated event markers")
+    provider_status: str = Field(default="online_empty", description="Backtest data provider status")
+    run_id: str | None = Field(default=None, description="Stable validation run identifier")
+    updated_at: str | None = Field(default=None, description="Validation payload generation time")
 
 
 class BacktestErrorBin(BaseModel):
@@ -124,6 +130,9 @@ class BacktestErrorsResponse(BaseModel):
     """Backtest error distribution response payload."""
 
     bins: list[BacktestErrorBin] = Field(..., description="Error histogram bins")
+    provider_status: str = Field(default="online_empty", description="Backtest data provider status")
+    run_id: str | None = Field(default=None, description="Stable validation run identifier")
+    updated_at: str | None = Field(default=None, description="Validation payload generation time")
 
 
 class FactorHistoryPoint(BaseModel):
@@ -149,6 +158,8 @@ class FactorHistoryResponse(BaseModel):
     categories: list[str] = Field(..., description="Factor category keys")
     points: list[FactorHistoryPoint] = Field(..., description="Historical contribution points")
     provider_status: str = Field(default="online_prediction_history", description="Factor data provider status")
+    run_id: str | None = Field(default=None, description="Stable validation run identifier")
+    updated_at: str | None = Field(default=None, description="Factor history payload generation time")
 
 
 class OverviewEventSummary(BaseModel):
@@ -188,6 +199,8 @@ class OverviewBacktestStatus(BaseModel):
     available: bool = False
     point_count: int = 0
     required_fields: list[str] = Field(default_factory=list)
+    run_id: str | None = None
+    updated_at: str | None = None
 
 
 class OverviewResponse(BaseModel):

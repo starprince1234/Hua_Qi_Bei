@@ -44,6 +44,11 @@ interface FactorTooltipProps {
   categories: FactorCategory[];
 }
 
+interface FactorPanelProps {
+  initialTarget?: Target | string;
+  embedded?: boolean;
+}
+
 const FACTOR_KEYS: FactorKey[] = ['inventory', 'geo', 'macro', 'supply_demand', 'technical'];
 
 const FALLBACK_CATEGORIES: Record<FactorKey, { label: string; color: string }> = {
@@ -83,7 +88,7 @@ function formatDateLabel(date: string): string {
 }
 
 function formatContribution(value: number): string {
-  return value.toFixed(3);
+  return `${(value * 100).toFixed(1)}%`;
 }
 
 function formatReturn(value: number): string {
@@ -98,6 +103,22 @@ function formatNullableReturn(value: number | null): string {
     return 'Pending actual';
   }
   return formatReturn(value);
+}
+
+function formatTimestamp(timestamp?: string | null): string {
+  if (!timestamp) {
+    return '-';
+  }
+  const date = new Date(timestamp);
+  if (Number.isNaN(date.getTime())) {
+    return timestamp;
+  }
+  return new Intl.DateTimeFormat('en', {
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(date);
 }
 
 function FactorTooltip({ active, label, payload, categories }: FactorTooltipProps) {
@@ -150,12 +171,16 @@ function FactorTooltip({ active, label, payload, categories }: FactorTooltipProp
   );
 }
 
-export default function FactorPanel() {
-  const [target, setTarget] = useState<Target>('Brent');
+export default function FactorPanel({ initialTarget = 'Brent', embedded = false }: FactorPanelProps) {
+  const [target, setTarget] = useState<Target>(initialTarget === 'WTI' ? 'WTI' : 'Brent');
   const [granularity, setGranularity] = useState<Granularity>('month');
   const [history, setHistory] = useState<FactorHistory | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setTarget(initialTarget === 'WTI' ? 'WTI' : 'Brent');
+  }, [initialTarget]);
 
   useEffect(() => {
     let cancelled = false;
@@ -205,7 +230,7 @@ export default function FactorPanel() {
   }, [history]);
 
   return (
-    <section className="w-full max-w-7xl mx-auto p-4">
+    <section className={embedded ? 'w-full' : 'w-full max-w-7xl mx-auto p-4'}>
       <div className="bg-gray-900 p-6 rounded-lg border border-gray-800">
         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-6">
           <div>
@@ -243,6 +268,23 @@ export default function FactorPanel() {
           </div>
         </div>
 
+        {!loading && !error && history && (
+          <div className="mb-6 grid grid-cols-1 gap-3 text-sm md:grid-cols-3">
+            <div className="rounded-md border border-gray-800 bg-gray-950 px-4 py-3">
+              <p className="text-xs uppercase tracking-wide text-gray-500">Provider</p>
+              <p className="mt-1 font-semibold text-gray-100">{history.provider_status}</p>
+            </div>
+            <div className="rounded-md border border-gray-800 bg-gray-950 px-4 py-3">
+              <p className="text-xs uppercase tracking-wide text-gray-500">Run ID</p>
+              <p className="mt-1 break-all font-mono text-xs text-gray-100">{history.run_id ?? '-'}</p>
+            </div>
+            <div className="rounded-md border border-gray-800 bg-gray-950 px-4 py-3">
+              <p className="text-xs uppercase tracking-wide text-gray-500">Updated</p>
+              <p className="mt-1 font-semibold text-gray-100">{formatTimestamp(history.updated_at)}</p>
+            </div>
+          </div>
+        )}
+
         {loading && (
           <div className="h-80 flex items-center justify-center rounded-lg border border-gray-800 bg-gray-950 text-gray-300">
             Loading factor history...
@@ -269,7 +311,7 @@ export default function FactorPanel() {
                 <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 20, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                   <XAxis dataKey="date" stroke="#EAEAEA" tickFormatter={formatDateLabel} />
-                  <YAxis stroke="#EAEAEA" tickFormatter={(value) => Number(value).toFixed(2)} />
+                  <YAxis stroke="#EAEAEA" tickFormatter={(value) => `${(Number(value) * 100).toFixed(0)}%`} />
                   <Tooltip content={<FactorTooltip categories={categories} />} />
                   <Legend />
                   {categories.map((category) => (

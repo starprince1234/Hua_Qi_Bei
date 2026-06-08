@@ -41,6 +41,9 @@ export interface BacktestSummary {
   metrics: BacktestMetrics;
   stage_metrics: BacktestStageMetric[];
   provider_status: string;
+  run_id: string | null;
+  model_version: string | null;
+  updated_at: string | null;
   required_fields: string[];
   message: string | null;
 }
@@ -64,6 +67,9 @@ export interface BacktestEventMark {
 export interface BacktestSeries {
   points: BacktestSeriesPoint[];
   events: BacktestEventMark[];
+  provider_status: string;
+  run_id: string | null;
+  updated_at: string | null;
 }
 
 export interface BacktestErrorBin {
@@ -73,6 +79,9 @@ export interface BacktestErrorBin {
 
 export interface BacktestErrors {
   bins: BacktestErrorBin[];
+  provider_status: string;
+  run_id: string | null;
+  updated_at: string | null;
 }
 
 export interface FactorHistoryPoint {
@@ -94,6 +103,8 @@ export interface FactorHistory {
   categories: string[];
   points: FactorHistoryPoint[];
   provider_status: string;
+  run_id: string | null;
+  updated_at: string | null;
 }
 
 export interface OverviewEventSummary {
@@ -125,6 +136,8 @@ export interface OverviewBacktestStatus {
   available: boolean;
   point_count: number;
   required_fields: string[];
+  run_id: string | null;
+  updated_at: string | null;
 }
 
 export interface OverviewData {

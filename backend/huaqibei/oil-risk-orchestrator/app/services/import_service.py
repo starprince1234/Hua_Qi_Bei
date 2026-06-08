@@ -205,19 +205,33 @@ class ImportService:
                     "window": payload.get("window", ""),
                     "metrics": payload.get("metrics", {}),
                     "stage_metrics": payload.get("stage_metrics", []),
+                    "provider_status": payload.get("provider_status", "offline_import"),
+                    "run_id": payload.get("run_id"),
+                    "model_version": payload.get("model_version"),
+                    "updated_at": payload.get("updated_at"),
                 }
             )
             series = BacktestSeriesResponse.model_validate(
                 {
                     "points": payload.get("points", []),
                     "events": payload.get("events", []),
+                    "provider_status": payload.get("provider_status", "offline_import"),
+                    "run_id": payload.get("run_id"),
+                    "updated_at": payload.get("updated_at"),
                 }
             )
-            errors = BacktestErrorsResponse.model_validate({"bins": payload.get("bins", [])})
+            errors = BacktestErrorsResponse.model_validate(
+                {
+                    "bins": payload.get("bins", []),
+                    "provider_status": payload.get("provider_status", "offline_import"),
+                    "run_id": payload.get("run_id"),
+                    "updated_at": payload.get("updated_at"),
+                }
+            )
         except ValidationError as exc:
             raise ValueError(f"Backtest payload failed schema validation: {exc}") from exc
 
-        run_id = self._deterministic_id(
+        run_id = str(payload.get("run_id") or "") or self._deterministic_id(
             "backtest",
             summary.target,
             self._backtest_date_range(summary, series),
@@ -241,13 +255,16 @@ class ImportService:
                 {
                     "categories": payload.get("categories", []),
                     "points": payload.get("points", []),
+                    "provider_status": payload.get("provider_status", "offline_import"),
+                    "run_id": payload.get("run_id"),
+                    "updated_at": payload.get("updated_at"),
                 }
             )
         except ValidationError as exc:
             raise ValueError(f"Factor history payload failed schema validation: {exc}") from exc
 
         date_range = self._point_date_range([point.date for point in history.points])
-        run_id = self._deterministic_id("factor_history", target, date_range)
+        run_id = str(payload.get("run_id") or "") or self._deterministic_id("factor_history", target, date_range)
         return FactorHistoryImportPayload(run_id=run_id, target=target, history=history)
 
     def _normalize_backtest_payload(

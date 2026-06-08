@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -297,9 +298,13 @@ def test_backtest_summary_api_returns_direction_accuracy() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["success"] is True
-    assert payload["data"]["provider_status"] == "online_empty"
-    assert payload["data"]["metrics"]["direction_accuracy"] == 0.0
-    assert "actual_return_7d" in payload["data"]["required_fields"]
+    assert payload["data"]["provider_status"] == "offline_validation"
+    assert payload["data"]["window"] == "2015-01-01/2025-12-31"
+    assert payload["data"]["run_id"].startswith("offline_validation_")
+    assert payload["data"]["model_version"] == "ridge_baseline_from_raw_v1"
+    assert payload["data"]["metrics"]["direction_accuracy"] > 0.8
+    assert payload["data"]["stage_metrics"]
+    assert payload["data"]["required_fields"] == []
 
 
 def test_backtest_series_api_includes_2022_02_24_event_mark() -> None:
@@ -308,8 +313,14 @@ def test_backtest_series_api_includes_2022_02_24_event_mark() -> None:
     response = client.get("/api/v1/backtest/series")
 
     assert response.status_code == 200
-    events = response.json()["data"]["events"]
-    assert events == []
+    data = response.json()["data"]
+    assert len(data["points"]) > 0
+    assert len(data["events"]) > 0
+    assert data["provider_status"] == "offline_validation"
+    assert data["run_id"].startswith("offline_validation_")
+    assert any(event["date"] == "2020-04-20" and event["label"] == "负油价冲击" for event in data["events"])
+    assert any(event["date"] == "2022-02-24" and event["label"] == "俄乌战争爆发" for event in data["events"])
+    assert any(event["label"] for event in data["events"])
 
 
 def test_backtest_errors_api_includes_deterministic_bins() -> None:
@@ -318,7 +329,9 @@ def test_backtest_errors_api_includes_deterministic_bins() -> None:
     response = client.get("/api/v1/backtest/errors")
 
     assert response.status_code == 200
-    assert response.json()["data"]["bins"] == []
+    bins = response.json()["data"]["bins"]
+    assert bins
+    assert sum(bin_item["count"] for bin_item in bins) > 0
 
 
 def test_backtest_invalid_target_returns_structured_or_empty_data() -> None:
@@ -353,8 +366,9 @@ def test_factor_history_api_returns_categories_and_points() -> None:
         "supply_demand",
         "technical",
     ]
-    assert payload["data"]["provider_status"] == "online_prediction_history"
-    assert payload["data"]["points"] == []
+    assert payload["data"]["provider_status"] == "offline_validation"
+    assert payload["data"]["run_id"].startswith("offline_validation_")
+    assert len(payload["data"]["points"]) > 0
 
 
 def test_factor_history_api_contains_2022_02_24_geo_contribution() -> None:
@@ -364,7 +378,8 @@ def test_factor_history_api_contains_2022_02_24_geo_contribution() -> None:
 
     assert response.status_code == 200
     points = response.json()["data"]["points"]
-    assert points == []
+    assert any(point["geo"] > 0 for point in points)
+    assert any(point["event_label"] for point in points)
 
 
 def test_factor_history_api_factor_contribution_sums_are_normalized() -> None:
@@ -388,12 +403,18 @@ def test_overview_api_returns_online_status_without_demo_backtest() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["success"] is True
-    assert payload["data"]["backtest"]["provider_status"] == "online_empty"
+    assert payload["data"]["backtest"]["provider_status"] == "offline_validation"
+    assert payload["data"]["backtest"]["available"] is True
+    assert payload["data"]["backtest"]["run_id"].startswith("offline_validation_")
+    assert payload["data"]["factor_history_points"] > 0
+    assert payload["data"]["dominant_factor"]["category"] is not None
     assert payload["data"]["latest_prediction"]["available"] is False
 
 
 def test_runtime_store_records_prediction_factor_history() -> None:
-    store = RuntimeIntelligenceStore()
+    empty_generated_dir = Path(__file__).resolve().parent / ".pytest_cache" / "empty-generated"
+    empty_generated_dir.mkdir(parents=True, exist_ok=True)
+    store = RuntimeIntelligenceStore(generated_dir=empty_generated_dir)
     payload = PredictResultPayload(
         prediction=PredictionSummaryV1(
             horizon=7,

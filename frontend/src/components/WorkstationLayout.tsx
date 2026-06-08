@@ -128,10 +128,8 @@ export default function WorkstationLayout() {
     },
     {
       title: '因子历史',
-      metric: overview?.dominant_factor.label
-        ? `主导因子: ${overview.dominant_factor.label}`
-        : '等待预测运行',
-      description: '追踪上传推理后生成的库存、地缘、宏观、供需和技术因子贡献。',
+      metric: overview ? `历史点数: ${overview.factor_history_points}` : '历史因子加载中',
+      description: '查看同一离线验证批次下的库存、地缘、宏观、供需和技术因子贡献。',
       actionLabel: '查看因子',
       onClick: () => setActiveTab('factorHistory'),
     },
@@ -309,6 +307,7 @@ export default function WorkstationLayout() {
                       </h3>
                       <p className="mt-2 text-sm text-gray-300">
                         Factor history points: {overview?.factor_history_points ?? 0}; backtest status: {overview?.backtest.provider_status ?? 'online_empty'}.
+                        {overview?.backtest.run_id ? ` Run: ${overview.backtest.run_id}` : ''}
                       </p>
                     </article>
                   </div>

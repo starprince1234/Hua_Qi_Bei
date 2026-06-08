@@ -1,0 +1,2738 @@
+{
+  "target": "Brent",
+  "window": "2015-01-01/2025-12-31",
+  "metrics": {
+    "direction_accuracy": 0.873569,
+    "rmse": 1.359629,
+    "mape": 0.014146,
+    "interval_hit_rate": {
+      "all": 0.94898,
+      "low": 0.980861,
+      "medium": 0.965722,
+      "high": 0.854041
+    }
+  },
+  "stage_metrics": [
+    {
+      "stage": "平稳期（2015-2019）",
+      "direction_accuracy": 0.874042,
+      "rmse": 0.970779
+    },
+    {
+      "stage": "高波动期（2020-2022）",
+      "direction_accuracy": 0.877737,
+      "rmse": 1.981532
+    },
+    {
+      "stage": "恢复期（2023-2025）",
+      "direction_accuracy": 0.868613,
+      "rmse": 1.131572
+    }
+  ],
+  "provider_status": "offline_validation",
+  "run_id": "offline_validation_a99234e236290b33",
+  "model_version": "ridge_baseline_from_raw_v1",
+  "updated_at": "2026-06-08T15:51:10Z",
+  "points": [
+    {
+      "date": "2015-03-08",
+      "actual_price": 58.62,
+      "predicted_price": 60.890992,
+      "lower_price": 58.427522,
+      "upper_price": 63.354461
+    },
+    {
+      "date": "2015-03-19",
+      "actual_price": 54.43,
+      "predicted_price": 54.970831,
+      "lower_price": 52.646744,
+      "upper_price": 57.294919
+    },
+    {
+      "date": "2015-03-30",
+      "actual_price": 56.29,
+      "predicted_price": 55.951598,
+      "lower_price": 53.674642,
+      "upper_price": 58.228554
+    },
+    {
+      "date": "2015-04-10",
+      "actual_price": 57.87,
+      "predicted_price": 57.081774,
+      "lower_price": 54.780008,
+      "upper_price": 59.383539
+    },
+    {
+      "date": "2015-04-21",
+      "actual_price": 62.08,
+      "predicted_price": 60.171279,
+      "lower_price": 57.792232,
+      "upper_price": 62.550327
+    },
+    {
+      "date": "2015-05-02",
+      "actual_price": 66.18,
+      "predicted_price": 66.012627,
+      "lower_price": 63.388791,
+      "upper_price": 68.636463
+    },
+    {
+      "date": "2015-05-13",
+      "actual_price": 66.81,
+      "predicted_price": 68.015307,
+      "lower_price": 65.25579,
+      "upper_price": 70.774823
+    },
+    {
+      "date": "2015-05-24",
+      "actual_price": 64.53,
+      "predicted_price": 65.544795,
+      "lower_price": 62.860664,
+      "upper_price": 68.228926
+    },
+    {
+      "date": "2015-06-04",
+      "actual_price": 62.03,
+      "predicted_price": 61.226946,
+      "lower_price": 58.67882,
+      "upper_price": 63.775071
+    },
+    {
+      "date": "2015-06-15",
+      "actual_price": 62.61,
+      "predicted_price": 62.388253,
+      "lower_price": 59.835616,
+      "upper_price": 64.94089
+    },
+    {
+      "date": "2015-06-26",
+      "actual_price": 63.26,
+      "predicted_price": 62.124153,
+      "lower_price": 59.558119,
+      "upper_price": 64.690186
+    },
+    {
+      "date": "2015-07-07",
+      "actual_price": 56.85,
+      "predicted_price": 58.021771,
+      "lower_price": 55.432525,
+      "upper_price": 60.611017
+    },
+    {
+      "date": "2015-07-18",
+      "actual_price": 57.06,
+      "predicted_price": 55.742998,
+      "lower_price": 53.384999,
+      "upper_price": 58.100998
+    },
+    {
+      "date": "2015-07-29",
+      "actual_price": 53.38,
+      "predicted_price": 53.871821,
+      "lower_price": 51.586336,
+      "upper_price": 56.157306
+    },
+    {
+      "date": "2015-08-09",
+      "actual_price": 49.53,
+      "predicted_price": 49.141047,
+      "lower_price": 47.05549,
+      "upper_price": 51.226605
+    },
+    {
+      "date": "2015-08-20",
+      "actual_price": 46.62,
+      "predicted_price": 46.223274,
+      "lower_price": 44.219214,
+      "upper_price": 48.227335
+    },
+    {
+      "date": "2015-08-31",
+      "actual_price": 54.15,
+      "predicted_price": 50.071732,
+      "lower_price": 48.333441,
+      "upper_price": 51.810023
+    },
+    {
+      "date": "2015-09-11",
+      "actual_price": 48.14,
+      "predicted_price": 48.555026,
+      "lower_price": 46.535099,
+      "upper_price": 50.574953
+    },
+    {
+      "date": "2015-09-22",
+      "actual_price": 49.08,
+      "predicted_price": 48.054666,
+      "lower_price": 46.155938,
+      "upper_price": 49.953394
+    },
+    {
+      "date": "2015-10-03",
+      "actual_price": 49.36,
+      "predicted_price": 49.845611,
+      "lower_price": 47.883478,
+      "upper_price": 51.807743
+    },
+    {
+      "date": "2015-10-14",
+      "actual_price": 49.15,
+      "predicted_price": 49.69375,
+      "lower_price": 47.60366,
+      "upper_price": 51.783841
+    },
+    {
+      "date": "2015-10-25",
+      "actual_price": 48.14,
+      "predicted_price": 48.210687,
+      "lower_price": 46.228147,
+      "upper_price": 50.193227
+    },
+    {
+      "date": "2015-11-05",
+      "actual_price": 47.98,
+      "predicted_price": 48.707934,
+      "lower_price": 46.72093,
+      "upper_price": 50.694938
+    },
+    {
+      "date": "2015-11-16",
+      "actual_price": 43.58,
+      "predicted_price": 44.230947,
+      "lower_price": 42.30949,
+      "upper_price": 46.152404
+    },
+    {
+      "date": "2015-11-27",
+      "actual_price": 44.86,
+      "predicted_price": 45.179821,
+      "lower_price": 43.36142,
+      "upper_price": 46.998222
+    },
+    {
+      "date": "2015-12-08",
+      "actual_price": 40.26,
+      "predicted_price": 40.439925,
+      "lower_price": 38.630361,
+      "upper_price": 42.249488
+    },
+    {
+      "date": "2015-12-19",
+      "actual_price": 37.23,
+      "predicted_price": 38.108555,
+      "lower_price": 36.524697,
+      "upper_price": 39.692412
+    },
+    {
+      "date": "2015-12-30",
+      "actual_price": 36.46,
+      "predicted_price": 36.690918,
+      "lower_price": 35.169699,
+      "upper_price": 38.212137
+    },
+    {
+      "date": "2016-01-10",
+      "actual_price": 32.72,
+      "predicted_price": 33.909631,
+      "lower_price": 32.437668,
+      "upper_price": 35.381595
+    },
+    {
+      "date": "2016-01-21",
+      "actual_price": 29.25,
+      "predicted_price": 30.048994,
+      "lower_price": 28.785484,
+      "upper_price": 31.312504
+    },
+    {
+      "date": "2016-02-01",
+      "actual_price": 34.69,
+      "predicted_price": 31.719346,
+      "lower_price": 30.477489,
+      "upper_price": 32.961202
+    },
+    {
+      "date": "2016-02-12",
+      "actual_price": 33.36,
+      "predicted_price": 35.445656,
+      "lower_price": 34.058752,
+      "upper_price": 36.832559
+    },
+    {
+      "date": "2016-02-23",
+      "actual_price": 33.27,
+      "predicted_price": 32.592208,
+      "lower_price": 31.281956,
+      "upper_price": 33.902459
+    },
+    {
+      "date": "2016-03-05",
+      "actual_price": 38.44,
+      "predicted_price": 39.800001,
+      "lower_price": 38.357839,
+      "upper_price": 41.242162
+    },
+    {
+      "date": "2016-03-16",
+      "actual_price": 40.33,
+      "predicted_price": 40.274667,
+      "lower_price": 38.602433,
+      "upper_price": 41.946901
+    },
+    {
+      "date": "2016-03-27",
+      "actual_price": 40.17,
+      "predicted_price": 40.056788,
+      "lower_price": 38.393559,
+      "upper_price": 41.720017
+    },
+    {
+      "date": "2016-04-07",
+      "actual_price": 39.43,
+      "predicted_price": 39.153921,
+      "lower_price": 37.5415,
+      "upper_price": 40.766343
+    },
+    {
+      "date": "2016-04-18",
+      "actual_price": 42.91,
+      "predicted_price": 42.269414,
+      "lower_price": 40.525543,
+      "upper_price": 44.013286
+    },
+    {
+      "date": "2016-04-29",
+      "actual_price": 48.13,
+      "predicted_price": 47.520209,
+      "lower_price": 45.683364,
+      "upper_price": 49.357054
+    },
+    {
+      "date": "2016-05-10",
+      "actual_price": 45.52,
+      "predicted_price": 46.690112,
+      "lower_price": 44.786592,
+      "upper_price": 48.593632
+    },
+    {
+      "date": "2016-05-21",
+      "actual_price": 48.87,
+      "predicted_price": 48.861048,
+      "lower_price": 46.917255,
+      "upper_price": 50.804841
+    },
+    {
+      "date": "2016-06-01",
+      "actual_price": 49.71,
+      "predicted_price": 49.625036,
+      "lower_price": 47.599757,
+      "upper_price": 51.650314
+    },
+    {
+      "date": "2016-06-12",
+      "actual_price": 50.28,
+      "predicted_price": 49.4934,
+      "lower_price": 47.433148,
+      "upper_price": 51.553652
+    },
+    {
+      "date": "2016-06-23",
+      "actual_price": 50.91,
+      "predicted_price": 49.901301,
+      "lower_price": 47.979791,
+      "upper_price": 51.82281
+    },
+    {
+      "date": "2016-07-04",
+      "actual_price": 48.46,
+      "predicted_price": 46.693379,
+      "lower_price": 44.773209,
+      "upper_price": 48.613549
+    },
+    {
+      "date": "2016-07-15",
+      "actual_price": 47.61,
+      "predicted_price": 47.934744,
+      "lower_price": 46.030838,
+      "upper_price": 49.83865
+    },
+    {
+      "date": "2016-07-26",
+      "actual_price": 44.87,
+      "predicted_price": 45.097404,
+      "lower_price": 43.197455,
+      "upper_price": 46.997353
+    },
+    {
+      "date": "2016-08-06",
+      "actual_price": 44.18,
+      "predicted_price": 44.284153,
+      "lower_price": 42.521912,
+      "upper_price": 46.046395
+    },
+    {
+      "date": "2016-08-17",
+      "actual_price": 49.85,
+      "predicted_price": 48.504511,
+      "lower_price": 46.710958,
+      "upper_price": 50.298064
+    },
+    {
+      "date": "2016-08-28",
+      "actual_price": 48.75,
+      "predicted_price": 49.316159,
+      "lower_price": 47.290468,
+      "upper_price": 51.34185
+    },
+    {
+      "date": "2016-09-08",
+      "actual_price": 49.99,
+      "predicted_price": 51.139044,
+      "lower_price": 49.223313,
+      "upper_price": 53.054775
+    },
+    {
+      "date": "2016-09-19",
+      "actual_price": 45.95,
+      "predicted_price": 48.213231,
+      "lower_price": 46.245864,
+      "upper_price": 50.180598
+    },
+    {
+      "date": "2016-09-30",
+      "actual_price": 49.06,
+      "predicted_price": 48.404661,
+      "lower_price": 46.536176,
+      "upper_price": 50.273146
+    },
+    {
+      "date": "2016-10-11",
+      "actual_price": 52.41,
+      "predicted_price": 51.237875,
+      "lower_price": 49.166633,
+      "upper_price": 53.309117
+    },
+    {
+      "date": "2016-10-22",
+      "actual_price": 51.34,
+      "predicted_price": 51.658475,
+      "lower_price": 49.545219,
+      "upper_price": 53.771731
+    },
+    {
+      "date": "2016-11-02",
+      "actual_price": 46.86,
+      "predicted_price": 47.29034,
+      "lower_price": 45.255337,
+      "upper_price": 49.325342
+    },
+    {
+      "date": "2016-11-13",
+      "actual_price": 46.1,
+      "predicted_price": 45.074425,
+      "lower_price": 43.181832,
+      "upper_price": 46.967018
+    },
+    {
+      "date": "2016-11-24",
+      "actual_price": 48.19,
+      "predicted_price": 47.350337,
+      "lower_price": 45.457444,
+      "upper_price": 49.24323
+    },
+    {
+      "date": "2016-12-05",
+      "actual_price": 54.94,
+      "predicted_price": 53.694187,
+      "lower_price": 51.729997,
+      "upper_price": 55.658377
+    },
+    {
+      "date": "2016-12-16",
+      "actual_price": 55.21,
+      "predicted_price": 55.559063,
+      "lower_price": 53.346891,
+      "upper_price": 57.771235
+    },
+    {
+      "date": "2016-12-27",
+      "actual_price": 56.09,
+      "predicted_price": 56.979776,
+      "lower_price": 54.726134,
+      "upper_price": 59.233418
+    },
+    {
+      "date": "2017-01-07",
+      "actual_price": 55.82,
+      "predicted_price": 55.610951,
+      "lower_price": 53.326224,
+      "upper_price": 57.895679
+    },
+    {
+      "date": "2017-01-18",
+      "actual_price": 53.92,
+      "predicted_price": 53.866168,
+      "lower_price": 51.622673,
+      "upper_price": 56.109662
+    },
+    {
+      "date": "2017-01-29",
+      "actual_price": 55.69,
+      "predicted_price": 55.23498,
+      "lower_price": 52.989877,
+      "upper_price": 57.480083
+    },
+    {
+      "date": "2017-02-09",
+      "actual_price": 55.63,
+      "predicted_price": 56.639607,
+      "lower_price": 54.33673,
+      "upper_price": 58.942485
+    },
+    {
+      "date": "2017-02-20",
+      "actual_price": 56.05,
+      "predicted_price": 55.820605,
+      "lower_price": 53.557179,
+      "upper_price": 58.08403
+    },
+    {
+      "date": "2017-03-03",
+      "actual_price": 55.9,
+      "predicted_price": 58.221903,
+      "lower_price": 55.942152,
+      "upper_price": 60.501655
+    },
+    {
+      "date": "2017-03-14",
+      "actual_price": 50.92,
+      "predicted_price": 52.516917,
+      "lower_price": 50.240032,
+      "upper_price": 54.793802
+    },
+    {
+      "date": "2017-03-25",
+      "actual_price": 51.25,
+      "predicted_price": 51.000745,
+      "lower_price": 48.907907,
+      "upper_price": 53.093582
+    },
+    {
+      "date": "2017-04-05",
+      "actual_price": 54.36,
+      "predicted_price": 53.778662,
+      "lower_price": 51.644236,
+      "upper_price": 55.913088
+    },
+    {
+      "date": "2017-04-16",
+      "actual_price": 54.81,
+      "predicted_price": 54.906603,
+      "lower_price": 52.656883,
+      "upper_price": 57.156323
+    },
+    {
+      "date": "2017-04-27",
+      "actual_price": 51.44,
+      "predicted_price": 50.879097,
+      "lower_price": 48.721371,
+      "upper_price": 53.036823
+    },
+    {
+      "date": "2017-05-08",
+      "actual_price": 49.34,
+      "predicted_price": 49.927,
+      "lower_price": 47.829268,
+      "upper_price": 52.024732
+    },
+    {
+      "date": "2017-05-19",
+      "actual_price": 53.61,
+      "predicted_price": 52.852424,
+      "lower_price": 50.78238,
+      "upper_price": 54.922468
+    },
+    {
+      "date": "2017-05-30",
+      "actual_price": 51.84,
+      "predicted_price": 53.117291,
+      "lower_price": 50.912349,
+      "upper_price": 55.322234
+    },
+    {
+      "date": "2017-06-10",
+      "actual_price": 48.33,
+      "predicted_price": 48.460693,
+      "lower_price": 46.423979,
+      "upper_price": 50.497407
+    },
+    {
+      "date": "2017-06-21",
+      "actual_price": 44.82,
+      "predicted_price": 44.696812,
+      "lower_price": 42.783059,
+      "upper_price": 46.610566
+    },
+    {
+      "date": "2017-07-02",
+      "actual_price": 47.75,
+      "predicted_price": 47.18928,
+      "lower_price": 45.306586,
+      "upper_price": 49.071973
+    },
+    {
+      "date": "2017-07-13",
+      "actual_price": 48.42,
+      "predicted_price": 48.91083,
+      "lower_price": 46.95183,
+      "upper_price": 50.86983
+    },
+    {
+      "date": "2017-07-24",
+      "actual_price": 48.6,
+      "predicted_price": 48.363294,
+      "lower_price": 46.391721,
+      "upper_price": 50.334866
+    },
+    {
+      "date": "2017-08-04",
+      "actual_price": 52.42,
+      "predicted_price": 52.338346,
+      "lower_price": 50.199875,
+      "upper_price": 54.476817
+    },
+    {
+      "date": "2017-08-15",
+      "actual_price": 50.8,
+      "predicted_price": 50.605368,
+      "lower_price": 48.482362,
+      "upper_price": 52.728375
+    },
+    {
+      "date": "2017-08-26",
+      "actual_price": 52.0,
+      "predicted_price": 52.149745,
+      "lower_price": 50.048409,
+      "upper_price": 54.251082
+    },
+    {
+      "date": "2017-09-06",
+      "actual_price": 54.2,
+      "predicted_price": 51.200437,
+      "lower_price": 49.129606,
+      "upper_price": 53.271269
+    },
+    {
+      "date": "2017-09-17",
+      "actual_price": 55.49,
+      "predicted_price": 55.065596,
+      "lower_price": 52.855472,
+      "upper_price": 57.27572
+    },
+    {
+      "date": "2017-09-28",
+      "actual_price": 57.41,
+      "predicted_price": 56.578962,
+      "lower_price": 54.281353,
+      "upper_price": 58.876572
+    },
+    {
+      "date": "2017-10-09",
+      "actual_price": 55.79,
+      "predicted_price": 56.188436,
+      "lower_price": 53.903328,
+      "upper_price": 58.473543
+    },
+    {
+      "date": "2017-10-20",
+      "actual_price": 57.75,
+      "predicted_price": 57.4427,
+      "lower_price": 55.11478,
+      "upper_price": 59.770619
+    },
+    {
+      "date": "2017-10-31",
+      "actual_price": 61.37,
+      "predicted_price": 60.910698,
+      "lower_price": 58.535612,
+      "upper_price": 63.285785
+    },
+    {
+      "date": "2017-11-11",
+      "actual_price": 63.08,
+      "predicted_price": 62.729016,
+      "lower_price": 60.192771,
+      "upper_price": 65.265261
+    },
+    {
+      "date": "2017-11-22",
+      "actual_price": 63.32,
+      "predicted_price": 63.319365,
+      "lower_price": 60.800088,
+      "upper_price": 65.838641
+    },
+    {
+      "date": "2017-12-03",
+      "actual_price": 62.9,
+      "predicted_price": 62.677173,
+      "lower_price": 60.097213,
+      "upper_price": 65.257133
+    },
+    {
+      "date": "2017-12-14",
+      "actual_price": 63.31,
+      "predicted_price": 62.900661,
+      "lower_price": 60.367924,
+      "upper_price": 65.433399
+    },
+    {
+      "date": "2017-12-25",
+      "actual_price": 65.77,
+      "predicted_price": 66.199647,
+      "lower_price": 63.617709,
+      "upper_price": 68.781584
+    },
+    {
+      "date": "2018-01-05",
+      "actual_price": 67.62,
+      "predicted_price": 67.523043,
+      "lower_price": 64.811221,
+      "upper_price": 70.234865
+    },
+    {
+      "date": "2018-01-16",
+      "actual_price": 69.15,
+      "predicted_price": 68.685262,
+      "lower_price": 65.883102,
+      "upper_price": 71.487422
+    },
+    {
+      "date": "2018-01-27",
+      "actual_price": 69.72,
+      "predicted_price": 70.069779,
+      "lower_price": 67.24227,
+      "upper_price": 72.897288
+    },
+    {
+      "date": "2018-02-07",
+      "actual_price": 65.51,
+      "predicted_price": 64.924585,
+      "lower_price": 62.112949,
+      "upper_price": 67.73622
+    },
+    {
+      "date": "2018-02-18",
+      "actual_price": 64.88,
+      "predicted_price": 64.657809,
+      "lower_price": 62.041181,
+      "upper_price": 67.274436
+    },
+    {
+      "date": "2018-03-01",
+      "actual_price": 65.71,
+      "predicted_price": 65.745949,
+      "lower_price": 63.042835,
+      "upper_price": 68.449063
+    },
+    {
+      "date": "2018-03-12",
+      "actual_price": 64.95,
+      "predicted_price": 64.560445,
+      "lower_price": 61.89183,
+      "upper_price": 67.229059
+    },
+    {
+      "date": "2018-03-23",
+      "actual_price": 70.45,
+      "predicted_price": 70.339811,
+      "lower_price": 67.643812,
+      "upper_price": 73.03581
+    },
+    {
+      "date": "2018-04-03",
+      "actual_price": 68.12,
+      "predicted_price": 69.22403,
+      "lower_price": 66.369284,
+      "upper_price": 72.078776
+    },
+    {
+      "date": "2018-04-14",
+      "actual_price": 71.84,
+      "predicted_price": 71.874047,
+      "lower_price": 69.059247,
+      "upper_price": 74.688847
+    },
+    {
+      "date": "2018-04-25",
+      "actual_price": 74.0,
+      "predicted_price": 74.211477,
+      "lower_price": 71.21963,
+      "upper_price": 77.203325
+    },
+    {
+      "date": "2018-05-06",
+      "actual_price": 75.41,
+      "predicted_price": 76.072514,
+      "lower_price": 73.040818,
+      "upper_price": 79.104209
+    },
+    {
+      "date": "2018-05-17",
+      "actual_price": 79.3,
+      "predicted_price": 79.156501,
+      "lower_price": 76.002054,
+      "upper_price": 82.310948
+    },
+    {
+      "date": "2018-05-28",
+      "actual_price": 77.52,
+      "predicted_price": 77.361308,
+      "lower_price": 74.135539,
+      "upper_price": 80.587077
+    },
+    {
+      "date": "2018-06-08",
+      "actual_price": 76.46,
+      "predicted_price": 77.434572,
+      "lower_price": 74.27519,
+      "upper_price": 80.593954
+    },
+    {
+      "date": "2018-06-19",
+      "actual_price": 75.08,
+      "predicted_price": 75.995965,
+      "lower_price": 72.906461,
+      "upper_price": 79.085469
+    },
+    {
+      "date": "2018-06-30",
+      "actual_price": 77.43,
+      "predicted_price": 77.878908,
+      "lower_price": 74.803654,
+      "upper_price": 80.954162
+    },
+    {
+      "date": "2018-07-11",
+      "actual_price": 73.4,
+      "predicted_price": 72.474575,
+      "lower_price": 69.315316,
+      "upper_price": 75.633835
+    },
+    {
+      "date": "2018-07-22",
+      "actual_price": 73.24,
+      "predicted_price": 72.995453,
+      "lower_price": 69.985618,
+      "upper_price": 76.005288
+    },
+    {
+      "date": "2018-08-02",
+      "actual_price": 73.45,
+      "predicted_price": 72.328116,
+      "lower_price": 69.29311,
+      "upper_price": 75.363123
+    },
+    {
+      "date": "2018-08-13",
+      "actual_price": 72.61,
+      "predicted_price": 73.308363,
+      "lower_price": 70.305323,
+      "upper_price": 76.311402
+    },
+    {
+      "date": "2018-08-24",
+      "actual_price": 75.82,
+      "predicted_price": 76.459028,
+      "lower_price": 73.534163,
+      "upper_price": 79.383893
+    },
+    {
+      "date": "2018-09-04",
+      "actual_price": 78.17,
+      "predicted_price": 78.135036,
+      "lower_price": 75.042458,
+      "upper_price": 81.227614
+    },
+    {
+      "date": "2018-09-15",
+      "actual_price": 78.56,
+      "predicted_price": 79.105823,
+      "lower_price": 75.943429,
+      "upper_price": 82.268217
+    },
+    {
+      "date": "2018-09-26",
+      "actual_price": 81.34,
+      "predicted_price": 81.909791,
+      "lower_price": 78.676722,
+      "upper_price": 85.14286
+    },
+    {
+      "date": "2018-10-07",
+      "actual_price": 83.86,
+      "predicted_price": 83.428173,
+      "lower_price": 80.02789,
+      "upper_price": 86.828455
+    },
+    {
+      "date": "2018-10-18",
+      "actual_price": 79.29,
+      "predicted_price": 78.3751,
+      "lower_price": 75.107072,
+      "upper_price": 81.643128
+    },
+    {
+      "date": "2018-10-29",
+      "actual_price": 77.34,
+      "predicted_price": 77.68105,
+      "lower_price": 74.430548,
+      "upper_price": 80.931551
+    },
+    {
+      "date": "2018-11-09",
+      "actual_price": 70.18,
+      "predicted_price": 69.151114,
+      "lower_price": 66.185621,
+      "upper_price": 72.116607
+    },
+    {
+      "date": "2018-11-20",
+      "actual_price": 62.53,
+      "predicted_price": 59.97435,
+      "lower_price": 57.308597,
+      "upper_price": 62.640104
+    },
+    {
+      "date": "2018-12-01",
+      "actual_price": 60.26,
+      "predicted_price": 60.333242,
+      "lower_price": 57.833107,
+      "upper_price": 62.833376
+    },
+    {
+      "date": "2018-12-12",
+      "actual_price": 60.15,
+      "predicted_price": 60.465825,
+      "lower_price": 57.994678,
+      "upper_price": 62.936971
+    },
+    {
+      "date": "2018-12-23",
+      "actual_price": 54.12,
+      "predicted_price": 56.448709,
+      "lower_price": 54.064347,
+      "upper_price": 58.833071
+    },
+    {
+      "date": "2019-01-03",
+      "actual_price": 55.95,
+      "predicted_price": 55.094676,
+      "lower_price": 52.970932,
+      "upper_price": 57.21842
+    },
+    {
+      "date": "2019-01-14",
+      "actual_price": 58.99,
+      "predicted_price": 58.227502,
+      "lower_price": 55.893273,
+      "upper_price": 60.561731
+    },
+    {
+      "date": "2019-01-25",
+      "actual_price": 61.64,
+      "predicted_price": 62.623267,
+      "lower_price": 60.070299,
+      "upper_price": 65.176234
+    },
+    {
+      "date": "2019-02-05",
+      "actual_price": 61.98,
+      "predicted_price": 63.233935,
+      "lower_price": 60.737233,
+      "upper_price": 65.730637
+    },
+    {
+      "date": "2019-02-16",
+      "actual_price": 64.94,
+      "predicted_price": 66.103628,
+      "lower_price": 63.557956,
+      "upper_price": 68.6493
+    },
+    {
+      "date": "2019-02-27",
+      "actual_price": 66.39,
+      "predicted_price": 67.989676,
+      "lower_price": 65.258313,
+      "upper_price": 70.721039
+    },
+    {
+      "date": "2019-03-10",
+      "actual_price": 66.48,
+      "predicted_price": 67.904975,
+      "lower_price": 65.227797,
+      "upper_price": 70.582153
+    },
+    {
+      "date": "2019-03-21",
+      "actual_price": 67.86,
+      "predicted_price": 68.096854,
+      "lower_price": 65.3595,
+      "upper_price": 70.834207
+    },
+    {
+      "date": "2019-04-01",
+      "actual_price": 69.01,
+      "predicted_price": 68.485924,
+      "lower_price": 65.749354,
+      "upper_price": 71.222494
+    },
+    {
+      "date": "2019-04-12",
+      "actual_price": 71.55,
+      "predicted_price": 72.031737,
+      "lower_price": 69.167667,
+      "upper_price": 74.895807
+    },
+    {
+      "date": "2019-04-23",
+      "actual_price": 74.51,
+      "predicted_price": 75.065739,
+      "lower_price": 72.145481,
+      "upper_price": 77.985996
+    },
+    {
+      "date": "2019-05-04",
+      "actual_price": 71.21,
+      "predicted_price": 71.46294,
+      "lower_price": 68.492153,
+      "upper_price": 74.433727
+    },
+    {
+      "date": "2019-05-15",
+      "actual_price": 71.77,
+      "predicted_price": 71.097383,
+      "lower_price": 68.232112,
+      "upper_price": 73.962654
+    },
+    {
+      "date": "2019-05-26",
+      "actual_price": 69.17,
+      "predicted_price": 69.974398,
+      "lower_price": 67.072363,
+      "upper_price": 72.876432
+    },
+    {
+      "date": "2019-06-06",
+      "actual_price": 61.67,
+      "predicted_price": 62.678924,
+      "lower_price": 59.95604,
+      "upper_price": 65.401808
+    },
+    {
+      "date": "2019-06-17",
+      "actual_price": 60.94,
+      "predicted_price": 60.735556,
+      "lower_price": 58.199197,
+      "upper_price": 63.271915
+    },
+    {
+      "date": "2019-06-28",
+      "actual_price": 66.55,
+      "predicted_price": 67.430064,
+      "lower_price": 64.775274,
+      "upper_price": 70.084855
+    },
+    {
+      "date": "2019-07-09",
+      "actual_price": 64.16,
+      "predicted_price": 62.853218,
+      "lower_price": 60.312438,
+      "upper_price": 65.393998
+    },
+    {
+      "date": "2019-07-20",
+      "actual_price": 63.5,
+      "predicted_price": 64.175162,
+      "lower_price": 61.519495,
+      "upper_price": 66.830828
+    },
+    {
+      "date": "2019-07-31",
+      "actual_price": 65.17,
+      "predicted_price": 65.153721,
+      "lower_price": 62.5812,
+      "upper_price": 67.726241
+    },
+    {
+      "date": "2019-08-11",
+      "actual_price": 58.78,
+      "predicted_price": 59.331903,
+      "lower_price": 56.869334,
+      "upper_price": 61.794471
+    },
+    {
+      "date": "2019-08-22",
+      "actual_price": 59.92,
+      "predicted_price": 59.103829,
+      "lower_price": 56.732801,
+      "upper_price": 61.474858
+    },
+    {
+      "date": "2019-09-02",
+      "actual_price": 60.26,
+      "predicted_price": 59.900156,
+      "lower_price": 57.5101,
+      "upper_price": 62.290213
+    },
+    {
+      "date": "2019-09-13",
+      "actual_price": 60.22,
+      "predicted_price": 60.576031,
+      "lower_price": 58.070407,
+      "upper_price": 63.081655
+    },
+    {
+      "date": "2019-09-24",
+      "actual_price": 63.1,
+      "predicted_price": 63.272427,
+      "lower_price": 60.644018,
+      "upper_price": 65.900836
+    },
+    {
+      "date": "2019-10-05",
+      "actual_price": 58.68,
+      "predicted_price": 59.107625,
+      "lower_price": 56.613577,
+      "upper_price": 61.601674
+    },
+    {
+      "date": "2019-10-16",
+      "actual_price": 59.42,
+      "predicted_price": 59.032828,
+      "lower_price": 56.658277,
+      "upper_price": 61.407379
+    },
+    {
+      "date": "2019-10-27",
+      "actual_price": 61.11,
+      "predicted_price": 61.151408,
+      "lower_price": 58.711715,
+      "upper_price": 63.5911
+    },
+    {
+      "date": "2019-11-07",
+      "actual_price": 62.29,
+      "predicted_price": 60.872736,
+      "lower_price": 58.42032,
+      "upper_price": 63.325152
+    },
+    {
+      "date": "2019-11-18",
+      "actual_price": 62.44,
+      "predicted_price": 63.382528,
+      "lower_price": 60.850765,
+      "upper_price": 65.914291
+    },
+    {
+      "date": "2019-11-29",
+      "actual_price": 62.43,
+      "predicted_price": 61.845666,
+      "lower_price": 59.264704,
+      "upper_price": 64.426627
+    },
+    {
+      "date": "2019-12-10",
+      "actual_price": 64.34,
+      "predicted_price": 63.624528,
+      "lower_price": 61.148151,
+      "upper_price": 66.100905
+    },
+    {
+      "date": "2019-12-21",
+      "actual_price": 66.44,
+      "predicted_price": 66.509529,
+      "lower_price": 63.862497,
+      "upper_price": 69.15656
+    },
+    {
+      "date": "2020-01-01",
+      "actual_price": 67.46,
+      "predicted_price": 67.666959,
+      "lower_price": 64.934371,
+      "upper_price": 70.399548
+    },
+    {
+      "date": "2020-01-12",
+      "actual_price": 65.21,
+      "predicted_price": 65.299163,
+      "lower_price": 62.562989,
+      "upper_price": 68.035338
+    },
+    {
+      "date": "2020-01-23",
+      "actual_price": 62.04,
+      "predicted_price": 61.358072,
+      "lower_price": 58.726982,
+      "upper_price": 63.989162
+    },
+    {
+      "date": "2020-02-03",
+      "actual_price": 54.45,
+      "predicted_price": 55.090255,
+      "lower_price": 52.674889,
+      "upper_price": 57.50562
+    },
+    {
+      "date": "2020-02-14",
+      "actual_price": 57.32,
+      "predicted_price": 56.698076,
+      "lower_price": 54.480151,
+      "upper_price": 58.916002
+    },
+    {
+      "date": "2020-02-25",
+      "actual_price": 54.95,
+      "predicted_price": 55.449057,
+      "lower_price": 53.097588,
+      "upper_price": 57.800526
+    },
+    {
+      "date": "2020-03-07",
+      "actual_price": 43.63,
+      "predicted_price": 45.343185,
+      "lower_price": 43.216403,
+      "upper_price": 47.469968
+    },
+    {
+      "date": "2020-03-18",
+      "actual_price": 24.88,
+      "predicted_price": 23.25936,
+      "lower_price": 21.802154,
+      "upper_price": 24.716566
+    },
+    {
+      "date": "2020-03-29",
+      "actual_price": 25.98,
+      "predicted_price": 25.601786,
+      "lower_price": 24.493057,
+      "upper_price": 26.710516
+    },
+    {
+      "date": "2020-04-09",
+      "actual_price": 31.48,
+      "predicted_price": 31.620577,
+      "lower_price": 30.401455,
+      "upper_price": 32.839699
+    },
+    {
+      "date": "2020-04-20",
+      "actual_price": 25.57,
+      "predicted_price": 23.261405,
+      "lower_price": 21.969021,
+      "upper_price": 24.55379
+    },
+    {
+      "date": "2020-05-01",
+      "actual_price": 26.44,
+      "predicted_price": 24.245552,
+      "lower_price": 23.372564,
+      "upper_price": 25.11854
+    },
+    {
+      "date": "2020-05-12",
+      "actual_price": 29.98,
+      "predicted_price": 31.993699,
+      "lower_price": 30.732637,
+      "upper_price": 33.254762
+    },
+    {
+      "date": "2020-05-23",
+      "actual_price": 35.22,
+      "predicted_price": 34.091493,
+      "lower_price": 32.766107,
+      "upper_price": 35.41688
+    },
+    {
+      "date": "2020-06-03",
+      "actual_price": 39.79,
+      "predicted_price": 38.30223,
+      "lower_price": 36.887749,
+      "upper_price": 39.716711
+    },
+    {
+      "date": "2020-06-14",
+      "actual_price": 40.37,
+      "predicted_price": 40.765018,
+      "lower_price": 39.121584,
+      "upper_price": 42.408452
+    },
+    {
+      "date": "2020-06-25",
+      "actual_price": 41.05,
+      "predicted_price": 40.380743,
+      "lower_price": 38.690531,
+      "upper_price": 42.070955
+    },
+    {
+      "date": "2020-07-06",
+      "actual_price": 43.1,
+      "predicted_price": 43.325103,
+      "lower_price": 41.626738,
+      "upper_price": 45.023469
+    },
+    {
+      "date": "2020-07-17",
+      "actual_price": 43.14,
+      "predicted_price": 42.564577,
+      "lower_price": 40.803977,
+      "upper_price": 44.325176
+    },
+    {
+      "date": "2020-07-28",
+      "actual_price": 43.22,
+      "predicted_price": 43.638013,
+      "lower_price": 41.833452,
+      "upper_price": 45.442573
+    },
+    {
+      "date": "2020-08-08",
+      "actual_price": 44.75,
+      "predicted_price": 44.148683,
+      "lower_price": 42.363181,
+      "upper_price": 45.934185
+    },
+    {
+      "date": "2020-08-19",
+      "actual_price": 45.37,
+      "predicted_price": 46.390966,
+      "lower_price": 44.541212,
+      "upper_price": 48.240721
+    },
+    {
+      "date": "2020-08-30",
+      "actual_price": 44.98,
+      "predicted_price": 45.105292,
+      "lower_price": 43.265358,
+      "upper_price": 46.945226
+    },
+    {
+      "date": "2020-09-10",
+      "actual_price": 40.06,
+      "predicted_price": 41.352552,
+      "lower_price": 39.558119,
+      "upper_price": 43.146986
+    },
+    {
+      "date": "2020-09-21",
+      "actual_price": 41.44,
+      "predicted_price": 40.880349,
+      "lower_price": 39.267531,
+      "upper_price": 42.493167
+    },
+    {
+      "date": "2020-10-02",
+      "actual_price": 39.27,
+      "predicted_price": 39.875321,
+      "lower_price": 38.168474,
+      "upper_price": 41.582167
+    },
+    {
+      "date": "2020-10-13",
+      "actual_price": 42.45,
+      "predicted_price": 42.396664,
+      "lower_price": 40.660047,
+      "upper_price": 44.133281
+    },
+    {
+      "date": "2020-10-24",
+      "actual_price": 41.2,
+      "predicted_price": 41.717256,
+      "lower_price": 39.979754,
+      "upper_price": 43.454758
+    },
+    {
+      "date": "2020-11-04",
+      "actual_price": 41.23,
+      "predicted_price": 41.240223,
+      "lower_price": 39.647302,
+      "upper_price": 42.833144
+    },
+    {
+      "date": "2020-11-15",
+      "actual_price": 43.66,
+      "predicted_price": 43.23187,
+      "lower_price": 41.532326,
+      "upper_price": 44.931414
+    },
+    {
+      "date": "2020-11-26",
+      "actual_price": 47.26,
+      "predicted_price": 46.980842,
+      "lower_price": 45.18108,
+      "upper_price": 48.780604
+    },
+    {
+      "date": "2020-12-07",
+      "actual_price": 48.79,
+      "predicted_price": 48.380258,
+      "lower_price": 46.442486,
+      "upper_price": 50.318029
+    },
+    {
+      "date": "2020-12-18",
+      "actual_price": 52.26,
+      "predicted_price": 52.825527,
+      "lower_price": 50.790824,
+      "upper_price": 54.860231
+    },
+    {
+      "date": "2020-12-29",
+      "actual_price": 51.09,
+      "predicted_price": 50.867731,
+      "lower_price": 48.828667,
+      "upper_price": 52.906795
+    },
+    {
+      "date": "2021-01-09",
+      "actual_price": 54.9,
+      "predicted_price": 54.886275,
+      "lower_price": 52.758753,
+      "upper_price": 57.013796
+    },
+    {
+      "date": "2021-01-20",
+      "actual_price": 56.08,
+      "predicted_price": 56.558958,
+      "lower_price": 54.276438,
+      "upper_price": 58.841479
+    },
+    {
+      "date": "2021-01-31",
+      "actual_price": 56.84,
+      "predicted_price": 57.454907,
+      "lower_price": 55.181674,
+      "upper_price": 59.72814
+    },
+    {
+      "date": "2021-02-11",
+      "actual_price": 61.14,
+      "predicted_price": 60.277685,
+      "lower_price": 57.881897,
+      "upper_price": 62.673473
+    },
+    {
+      "date": "2021-02-22",
+      "actual_price": 65.24,
+      "predicted_price": 65.647826,
+      "lower_price": 63.09359,
+      "upper_price": 68.202061
+    },
+    {
+      "date": "2021-03-05",
+      "actual_price": 69.36,
+      "predicted_price": 73.134333,
+      "lower_price": 70.441578,
+      "upper_price": 75.827087
+    },
+    {
+      "date": "2021-03-16",
+      "actual_price": 68.39,
+      "predicted_price": 68.073283,
+      "lower_price": 65.324083,
+      "upper_price": 70.822483
+    },
+    {
+      "date": "2021-03-27",
+      "actual_price": 63.83,
+      "predicted_price": 64.12705,
+      "lower_price": 61.480956,
+      "upper_price": 66.773144
+    },
+    {
+      "date": "2021-04-07",
+      "actual_price": 63.16,
+      "predicted_price": 62.871622,
+      "lower_price": 60.284385,
+      "upper_price": 65.458858
+    },
+    {
+      "date": "2021-04-18",
+      "actual_price": 66.04,
+      "predicted_price": 65.531535,
+      "lower_price": 62.923661,
+      "upper_price": 68.139409
+    },
+    {
+      "date": "2021-04-29",
+      "actual_price": 68.56,
+      "predicted_price": 68.753953,
+      "lower_price": 66.090987,
+      "upper_price": 71.416918
+    },
+    {
+      "date": "2021-05-10",
+      "actual_price": 68.32,
+      "predicted_price": 67.776424,
+      "lower_price": 65.025421,
+      "upper_price": 70.527428
+    },
+    {
+      "date": "2021-05-21",
+      "actual_price": 66.44,
+      "predicted_price": 67.400018,
+      "lower_price": 64.602432,
+      "upper_price": 70.197604
+    },
+    {
+      "date": "2021-06-01",
+      "actual_price": 70.25,
+      "predicted_price": 70.208654,
+      "lower_price": 67.413385,
+      "upper_price": 73.003924
+    },
+    {
+      "date": "2021-06-12",
+      "actual_price": 72.79,
+      "predicted_price": 72.793905,
+      "lower_price": 69.883347,
+      "upper_price": 75.704464
+    },
+    {
+      "date": "2021-06-23",
+      "actual_price": 75.19,
+      "predicted_price": 76.861206,
+      "lower_price": 73.832374,
+      "upper_price": 79.890038
+    },
+    {
+      "date": "2021-07-04",
+      "actual_price": 74.97,
+      "predicted_price": 75.186091,
+      "lower_price": 72.120938,
+      "upper_price": 78.251244
+    },
+    {
+      "date": "2021-07-15",
+      "actual_price": 73.47,
+      "predicted_price": 72.17092,
+      "lower_price": 69.152851,
+      "upper_price": 75.188988
+    },
+    {
+      "date": "2021-07-26",
+      "actual_price": 74.5,
+      "predicted_price": 72.770701,
+      "lower_price": 69.976698,
+      "upper_price": 75.564703
+    },
+    {
+      "date": "2021-08-06",
+      "actual_price": 70.7,
+      "predicted_price": 71.368015,
+      "lower_price": 68.259915,
+      "upper_price": 74.476115
+    },
+    {
+      "date": "2021-08-17",
+      "actual_price": 69.03,
+      "predicted_price": 67.898447,
+      "lower_price": 65.022438,
+      "upper_price": 70.774457
+    },
+    {
+      "date": "2021-08-28",
+      "actual_price": 71.88,
+      "predicted_price": 71.030083,
+      "lower_price": 68.226664,
+      "upper_price": 73.833501
+    },
+    {
+      "date": "2021-09-08",
+      "actual_price": 72.6,
+      "predicted_price": 72.979082,
+      "lower_price": 70.064098,
+      "upper_price": 75.894066
+    },
+    {
+      "date": "2021-09-19",
+      "actual_price": 75.22,
+      "predicted_price": 74.617299,
+      "lower_price": 71.627485,
+      "upper_price": 77.607113
+    },
+    {
+      "date": "2021-09-30",
+      "actual_price": 78.52,
+      "predicted_price": 78.039089,
+      "lower_price": 74.893543,
+      "upper_price": 81.184634
+    },
+    {
+      "date": "2021-10-11",
+      "actual_price": 83.65,
+      "predicted_price": 84.536761,
+      "lower_price": 81.228025,
+      "upper_price": 87.845497
+    },
+    {
+      "date": "2021-10-22",
+      "actual_price": 85.53,
+      "predicted_price": 85.52891,
+      "lower_price": 82.073645,
+      "upper_price": 88.984175
+    },
+    {
+      "date": "2021-11-02",
+      "actual_price": 84.72,
+      "predicted_price": 84.164206,
+      "lower_price": 80.646379,
+      "upper_price": 87.682032
+    },
+    {
+      "date": "2021-11-13",
+      "actual_price": 82.32,
+      "predicted_price": 80.644791,
+      "lower_price": 77.263515,
+      "upper_price": 84.026067
+    },
+    {
+      "date": "2021-11-24",
+      "actual_price": 82.25,
+      "predicted_price": 81.662558,
+      "lower_price": 78.393638,
+      "upper_price": 84.931478
+    },
+    {
+      "date": "2021-12-05",
+      "actual_price": 72.61,
+      "predicted_price": 72.188315,
+      "lower_price": 69.16346,
+      "upper_price": 75.213169
+    },
+    {
+      "date": "2021-12-16",
+      "actual_price": 75.02,
+      "predicted_price": 74.598286,
+      "lower_price": 71.568208,
+      "upper_price": 77.628364
+    },
+    {
+      "date": "2021-12-27",
+      "actual_price": 78.6,
+      "predicted_price": 77.951246,
+      "lower_price": 75.039153,
+      "upper_price": 80.863338
+    },
+    {
+      "date": "2022-01-07",
+      "actual_price": 81.75,
+      "predicted_price": 82.002931,
+      "lower_price": 78.835805,
+      "upper_price": 85.170058
+    },
+    {
+      "date": "2022-01-18",
+      "actual_price": 87.51,
+      "predicted_price": 87.875434,
+      "lower_price": 84.466669,
+      "upper_price": 91.284199
+    },
+    {
+      "date": "2022-01-29",
+      "actual_price": 89.64,
+      "predicted_price": 90.441004,
+      "lower_price": 86.860203,
+      "upper_price": 94.021804
+    },
+    {
+      "date": "2022-02-09",
+      "actual_price": 91.55,
+      "predicted_price": 89.211294,
+      "lower_price": 85.568135,
+      "upper_price": 92.854453
+    },
+    {
+      "date": "2022-02-20",
+      "actual_price": 95.49,
+      "predicted_price": 94.60627,
+      "lower_price": 90.800743,
+      "upper_price": 98.411797
+    },
+    {
+      "date": "2022-03-03",
+      "actual_price": 110.46,
+      "predicted_price": 112.852801,
+      "lower_price": 108.818675,
+      "upper_price": 116.886927
+    },
+    {
+      "date": "2022-03-14",
+      "actual_price": 106.9,
+      "predicted_price": 104.655337,
+      "lower_price": 99.638402,
+      "upper_price": 109.672273
+    },
+    {
+      "date": "2022-03-25",
+      "actual_price": 120.65,
+      "predicted_price": 115.080188,
+      "lower_price": 110.685736,
+      "upper_price": 119.47464
+    },
+    {
+      "date": "2022-04-05",
+      "actual_price": 106.64,
+      "predicted_price": 103.234373,
+      "lower_price": 98.745943,
+      "upper_price": 107.722802
+    },
+    {
+      "date": "2022-04-16",
+      "actual_price": 107.75,
+      "predicted_price": 105.985669,
+      "lower_price": 101.752455,
+      "upper_price": 110.218883
+    },
+    {
+      "date": "2022-04-27",
+      "actual_price": 105.32,
+      "predicted_price": 103.123673,
+      "lower_price": 98.774865,
+      "upper_price": 107.472482
+    },
+    {
+      "date": "2022-05-08",
+      "actual_price": 107.97,
+      "predicted_price": 105.277225,
+      "lower_price": 100.892802,
+      "upper_price": 109.661648
+    },
+    {
+      "date": "2022-05-19",
+      "actual_price": 112.04,
+      "predicted_price": 110.339852,
+      "lower_price": 105.96469,
+      "upper_price": 114.715013
+    },
+    {
+      "date": "2022-05-30",
+      "actual_price": 118.02,
+      "predicted_price": 115.239474,
+      "lower_price": 110.621493,
+      "upper_price": 119.857455
+    },
+    {
+      "date": "2022-06-10",
+      "actual_price": 122.01,
+      "predicted_price": 118.801015,
+      "lower_price": 113.926191,
+      "upper_price": 123.67584
+    },
+    {
+      "date": "2022-06-21",
+      "actual_price": 114.65,
+      "predicted_price": 112.954809,
+      "lower_price": 108.021123,
+      "upper_price": 117.888494
+    },
+    {
+      "date": "2022-07-02",
+      "actual_price": 110.85,
+      "predicted_price": 105.453018,
+      "lower_price": 100.808516,
+      "upper_price": 110.09752
+    },
+    {
+      "date": "2022-07-13",
+      "actual_price": 99.57,
+      "predicted_price": 94.305157,
+      "lower_price": 90.205415,
+      "upper_price": 98.404898
+    },
+    {
+      "date": "2022-07-24",
+      "actual_price": 105.59,
+      "predicted_price": 99.449427,
+      "lower_price": 95.234788,
+      "upper_price": 103.664066
+    },
+    {
+      "date": "2022-08-04",
+      "actual_price": 94.12,
+      "predicted_price": 92.230817,
+      "lower_price": 87.868467,
+      "upper_price": 96.593167
+    },
+    {
+      "date": "2022-08-15",
+      "actual_price": 95.1,
+      "predicted_price": 92.303807,
+      "lower_price": 88.368617,
+      "upper_price": 96.238998
+    },
+    {
+      "date": "2022-08-26",
+      "actual_price": 100.99,
+      "predicted_price": 96.26194,
+      "lower_price": 92.323569,
+      "upper_price": 100.200311
+    },
+    {
+      "date": "2022-09-06",
+      "actual_price": 92.83,
+      "predicted_price": 92.307344,
+      "lower_price": 88.263481,
+      "upper_price": 96.351208
+    },
+    {
+      "date": "2022-09-17",
+      "actual_price": 91.54,
+      "predicted_price": 88.693852,
+      "lower_price": 84.946342,
+      "upper_price": 92.441362
+    },
+    {
+      "date": "2022-09-28",
+      "actual_price": 89.32,
+      "predicted_price": 91.621918,
+      "lower_price": 87.964188,
+      "upper_price": 95.279648
+    },
+    {
+      "date": "2022-10-09",
+      "actual_price": 94.12,
+      "predicted_price": 94.204055,
+      "lower_price": 90.531487,
+      "upper_price": 97.876623
+    },
+    {
+      "date": "2022-10-20",
+      "actual_price": 92.38,
+      "predicted_price": 93.198964,
+      "lower_price": 89.348149,
+      "upper_price": 97.049779
+    },
+    {
+      "date": "2022-10-31",
+      "actual_price": 94.83,
+      "predicted_price": 94.230212,
+      "lower_price": 90.432775,
+      "upper_price": 98.027648
+    },
+    {
+      "date": "2022-11-11",
+      "actual_price": 95.99,
+      "predicted_price": 97.281466,
+      "lower_price": 93.267843,
+      "upper_price": 101.295089
+    },
+    {
+      "date": "2022-11-22",
+      "actual_price": 88.36,
+      "predicted_price": 89.611314,
+      "lower_price": 85.789567,
+      "upper_price": 93.43306
+    },
+    {
+      "date": "2022-12-03",
+      "actual_price": 82.65,
+      "predicted_price": 79.746488,
+      "lower_price": 76.268147,
+      "upper_price": 83.22483
+    },
+    {
+      "date": "2022-12-14",
+      "actual_price": 82.7,
+      "predicted_price": 82.16167,
+      "lower_price": 79.019623,
+      "upper_price": 85.303716
+    },
+    {
+      "date": "2022-12-25",
+      "actual_price": 82.68,
+      "predicted_price": 83.296715,
+      "lower_price": 80.010705,
+      "upper_price": 86.582725
+    },
+    {
+      "date": "2023-01-05",
+      "actual_price": 78.69,
+      "predicted_price": 78.711688,
+      "lower_price": 75.362269,
+      "upper_price": 82.061108
+    },
+    {
+      "date": "2023-01-16",
+      "actual_price": 84.78,
+      "predicted_price": 84.565623,
+      "lower_price": 81.322459,
+      "upper_price": 87.808787
+    },
+    {
+      "date": "2023-01-27",
+      "actual_price": 86.66,
+      "predicted_price": 87.406978,
+      "lower_price": 83.838799,
+      "upper_price": 90.975158
+    },
+    {
+      "date": "2023-02-07",
+      "actual_price": 83.69,
+      "predicted_price": 83.536046,
+      "lower_price": 80.095721,
+      "upper_price": 86.976371
+    },
+    {
+      "date": "2023-02-18",
+      "actual_price": 83.96,
+      "predicted_price": 83.097715,
+      "lower_price": 79.641057,
+      "upper_price": 86.554374
+    },
+    {
+      "date": "2023-03-01",
+      "actual_price": 84.31,
+      "predicted_price": 81.658826,
+      "lower_price": 78.376908,
+      "upper_price": 84.940745
+    },
+    {
+      "date": "2023-03-12",
+      "actual_price": 79.64,
+      "predicted_price": 79.652331,
+      "lower_price": 76.229196,
+      "upper_price": 83.075466
+    },
+    {
+      "date": "2023-03-23",
+      "actual_price": 75.91,
+      "predicted_price": 73.855118,
+      "lower_price": 70.813532,
+      "upper_price": 76.896705
+    },
+    {
+      "date": "2023-04-03",
+      "actual_price": 84.93,
+      "predicted_price": 85.994792,
+      "lower_price": 82.814023,
+      "upper_price": 89.17556
+    },
+    {
+      "date": "2023-04-14",
+      "actual_price": 86.31,
+      "predicted_price": 86.072946,
+      "lower_price": 82.624151,
+      "upper_price": 89.52174
+    },
+    {
+      "date": "2023-04-25",
+      "actual_price": 80.77,
+      "predicted_price": 79.249367,
+      "lower_price": 75.797702,
+      "upper_price": 82.701033
+    },
+    {
+      "date": "2023-05-06",
+      "actual_price": 75.49,
+      "predicted_price": 74.914805,
+      "lower_price": 71.741401,
+      "upper_price": 78.088208
+    },
+    {
+      "date": "2023-05-17",
+      "actual_price": 76.96,
+      "predicted_price": 76.517732,
+      "lower_price": 73.40652,
+      "upper_price": 79.628945
+    },
+    {
+      "date": "2023-05-28",
+      "actual_price": 75.57,
+      "predicted_price": 75.544535,
+      "lower_price": 72.436438,
+      "upper_price": 78.652632
+    },
+    {
+      "date": "2023-06-08",
+      "actual_price": 75.96,
+      "predicted_price": 75.548143,
+      "lower_price": 72.523602,
+      "upper_price": 78.572684
+    },
+    {
+      "date": "2023-06-19",
+      "actual_price": 75.22,
+      "predicted_price": 73.368957,
+      "lower_price": 70.44368,
+      "upper_price": 76.294234
+    },
+    {
+      "date": "2023-06-30",
+      "actual_price": 74.9,
+      "predicted_price": 74.312617,
+      "lower_price": 71.305581,
+      "upper_price": 77.319652
+    },
+    {
+      "date": "2023-07-11",
+      "actual_price": 79.4,
+      "predicted_price": 77.107142,
+      "lower_price": 74.021958,
+      "upper_price": 80.192325
+    },
+    {
+      "date": "2023-07-22",
+      "actual_price": 81.34,
+      "predicted_price": 81.289902,
+      "lower_price": 78.049241,
+      "upper_price": 84.530563
+    },
+    {
+      "date": "2023-08-02",
+      "actual_price": 83.2,
+      "predicted_price": 81.542262,
+      "lower_price": 78.166051,
+      "upper_price": 84.918473
+    },
+    {
+      "date": "2023-08-13",
+      "actual_price": 85.65,
+      "predicted_price": 83.991901,
+      "lower_price": 80.501661,
+      "upper_price": 87.482141
+    },
+    {
+      "date": "2023-08-24",
+      "actual_price": 83.36,
+      "predicted_price": 80.946676,
+      "lower_price": 77.521646,
+      "upper_price": 84.371706
+    },
+    {
+      "date": "2023-09-04",
+      "actual_price": 88.7,
+      "predicted_price": 86.628238,
+      "lower_price": 83.190876,
+      "upper_price": 90.065599
+    },
+    {
+      "date": "2023-09-15",
+      "actual_price": 93.93,
+      "predicted_price": 95.723441,
+      "lower_price": 92.032466,
+      "upper_price": 99.414416
+    },
+    {
+      "date": "2023-09-26",
+      "actual_price": 93.96,
+      "predicted_price": 93.902614,
+      "lower_price": 90.061439,
+      "upper_price": 97.743788
+    },
+    {
+      "date": "2023-10-07",
+      "actual_price": 87.22,
+      "predicted_price": 89.44717,
+      "lower_price": 85.694662,
+      "upper_price": 93.199679
+    },
+    {
+      "date": "2023-10-18",
+      "actual_price": 91.5,
+      "predicted_price": 90.79571,
+      "lower_price": 87.30139,
+      "upper_price": 94.290031
+    },
+    {
+      "date": "2023-10-29",
+      "actual_price": 87.86,
+      "predicted_price": 87.748216,
+      "lower_price": 84.073777,
+      "upper_price": 91.422654
+    },
+    {
+      "date": "2023-11-09",
+      "actual_price": 80.01,
+      "predicted_price": 79.171311,
+      "lower_price": 75.634835,
+      "upper_price": 82.707787
+    },
+    {
+      "date": "2023-11-20",
+      "actual_price": 82.32,
+      "predicted_price": 82.601234,
+      "lower_price": 79.241312,
+      "upper_price": 85.961157
+    },
+    {
+      "date": "2023-12-01",
+      "actual_price": 78.88,
+      "predicted_price": 78.124997,
+      "lower_price": 74.843976,
+      "upper_price": 81.406017
+    },
+    {
+      "date": "2023-12-12",
+      "actual_price": 73.24,
+      "predicted_price": 72.906266,
+      "lower_price": 69.762865,
+      "upper_price": 76.049667
+    },
+    {
+      "date": "2023-12-23",
+      "actual_price": 79.14,
+      "predicted_price": 78.797546,
+      "lower_price": 75.664766,
+      "upper_price": 81.930326
+    },
+    {
+      "date": "2024-01-03",
+      "actual_price": 78.25,
+      "predicted_price": 79.687622,
+      "lower_price": 76.444403,
+      "upper_price": 82.930842
+    },
+    {
+      "date": "2024-01-14",
+      "actual_price": 77.87,
+      "predicted_price": 77.688942,
+      "lower_price": 74.535306,
+      "upper_price": 80.842579
+    },
+    {
+      "date": "2024-01-25",
+      "actual_price": 82.43,
+      "predicted_price": 84.034755,
+      "lower_price": 80.81401,
+      "upper_price": 87.255499
+    },
+    {
+      "date": "2024-02-05",
+      "actual_price": 77.99,
+      "predicted_price": 79.043906,
+      "lower_price": 75.688858,
+      "upper_price": 82.398953
+    },
+    {
+      "date": "2024-02-16",
+      "actual_price": 83.47,
+      "predicted_price": 85.410638,
+      "lower_price": 82.064159,
+      "upper_price": 88.757117
+    },
+    {
+      "date": "2024-02-27",
+      "actual_price": 83.65,
+      "predicted_price": 84.153188,
+      "lower_price": 80.800483,
+      "upper_price": 87.505893
+    },
+    {
+      "date": "2024-03-09",
+      "actual_price": 82.89,
+      "predicted_price": 84.066137,
+      "lower_price": 80.683289,
+      "upper_price": 87.448985
+    },
+    {
+      "date": "2024-03-20",
+      "actual_price": 85.95,
+      "predicted_price": 84.767164,
+      "lower_price": 81.345515,
+      "upper_price": 88.188814
+    },
+    {
+      "date": "2024-03-31",
+      "actual_price": 88.06,
+      "predicted_price": 87.927525,
+      "lower_price": 84.413287,
+      "upper_price": 91.441763
+    },
+    {
+      "date": "2024-04-11",
+      "actual_price": 89.74,
+      "predicted_price": 88.403934,
+      "lower_price": 84.713043,
+      "upper_price": 92.094825
+    },
+    {
+      "date": "2024-04-22",
+      "actual_price": 87.0,
+      "predicted_price": 87.394548,
+      "lower_price": 83.725931,
+      "upper_price": 91.063164
+    },
+    {
+      "date": "2024-05-03",
+      "actual_price": 82.96,
+      "predicted_price": 83.336055,
+      "lower_price": 79.691738,
+      "upper_price": 86.980373
+    },
+    {
+      "date": "2024-05-14",
+      "actual_price": 82.38,
+      "predicted_price": 80.559179,
+      "lower_price": 77.173047,
+      "upper_price": 83.94531
+    },
+    {
+      "date": "2024-05-25",
+      "actual_price": 82.58,
+      "predicted_price": 82.010714,
+      "lower_price": 78.632051,
+      "upper_price": 85.389377
+    },
+    {
+      "date": "2024-06-05",
+      "actual_price": 78.41,
+      "predicted_price": 79.251992,
+      "lower_price": 75.847947,
+      "upper_price": 82.656037
+    },
+    {
+      "date": "2024-06-16",
+      "actual_price": 83.59,
+      "predicted_price": 82.493756,
+      "lower_price": 79.207188,
+      "upper_price": 85.780324
+    },
+    {
+      "date": "2024-06-27",
+      "actual_price": 86.39,
+      "predicted_price": 87.38666,
+      "lower_price": 83.896652,
+      "upper_price": 90.876667
+    },
+    {
+      "date": "2024-07-08",
+      "actual_price": 85.75,
+      "predicted_price": 85.931207,
+      "lower_price": 82.405132,
+      "upper_price": 89.457282
+    },
+    {
+      "date": "2024-07-19",
+      "actual_price": 82.63,
+      "predicted_price": 81.92723,
+      "lower_price": 78.465118,
+      "upper_price": 85.389343
+    },
+    {
+      "date": "2024-07-30",
+      "actual_price": 78.63,
+      "predicted_price": 77.082717,
+      "lower_price": 73.784127,
+      "upper_price": 80.381307
+    },
+    {
+      "date": "2024-08-10",
+      "actual_price": 79.43,
+      "predicted_price": 79.64774,
+      "lower_price": 76.454744,
+      "upper_price": 82.840735
+    },
+    {
+      "date": "2024-08-21",
+      "actual_price": 76.05,
+      "predicted_price": 76.416181,
+      "lower_price": 73.168609,
+      "upper_price": 79.663754
+    },
+    {
+      "date": "2024-09-01",
+      "actual_price": 76.47,
+      "predicted_price": 75.303884,
+      "lower_price": 72.094915,
+      "upper_price": 78.512852
+    },
+    {
+      "date": "2024-09-12",
+      "actual_price": 71.97,
+      "predicted_price": 72.888103,
+      "lower_price": 69.928368,
+      "upper_price": 75.847838
+    },
+    {
+      "date": "2024-09-23",
+      "actual_price": 73.9,
+      "predicted_price": 73.076877,
+      "lower_price": 70.114662,
+      "upper_price": 76.039092
+    },
+    {
+      "date": "2024-10-04",
+      "actual_price": 78.05,
+      "predicted_price": 78.819941,
+      "lower_price": 75.889022,
+      "upper_price": 81.75086
+    },
+    {
+      "date": "2024-10-15",
+      "actual_price": 74.25,
+      "predicted_price": 73.212029,
+      "lower_price": 70.069337,
+      "upper_price": 76.35472
+    },
+    {
+      "date": "2024-10-26",
+      "actual_price": 73.85,
+      "predicted_price": 72.05954,
+      "lower_price": 69.014186,
+      "upper_price": 75.104893
+    },
+    {
+      "date": "2024-11-06",
+      "actual_price": 74.92,
+      "predicted_price": 73.662486,
+      "lower_price": 70.70853,
+      "upper_price": 76.616441
+    },
+    {
+      "date": "2024-11-17",
+      "actual_price": 72.81,
+      "predicted_price": 73.236228,
+      "lower_price": 70.250694,
+      "upper_price": 76.221763
+    },
+    {
+      "date": "2024-11-28",
+      "actual_price": 73.02,
+      "predicted_price": 73.078258,
+      "lower_price": 70.055805,
+      "upper_price": 76.10071
+    },
+    {
+      "date": "2024-12-09",
+      "actual_price": 72.14,
+      "predicted_price": 72.014998,
+      "lower_price": 69.090219,
+      "upper_price": 74.939777
+    },
+    {
+      "date": "2024-12-20",
+      "actual_price": 72.94,
+      "predicted_price": 73.213814,
+      "lower_price": 70.180798,
+      "upper_price": 76.24683
+    },
+    {
+      "date": "2024-12-31",
+      "actual_price": 74.64,
+      "predicted_price": 75.091119,
+      "lower_price": 72.095113,
+      "upper_price": 78.087125
+    },
+    {
+      "date": "2025-01-11",
+      "actual_price": 78.87,
+      "predicted_price": 79.739569,
+      "lower_price": 76.644259,
+      "upper_price": 82.834878
+    },
+    {
+      "date": "2025-01-22",
+      "actual_price": 79.0,
+      "predicted_price": 79.386933,
+      "lower_price": 76.047013,
+      "upper_price": 82.726853
+    },
+    {
+      "date": "2025-02-02",
+      "actual_price": 76.1,
+      "predicted_price": 75.832567,
+      "lower_price": 72.661026,
+      "upper_price": 79.004109
+    },
+    {
+      "date": "2025-02-13",
+      "actual_price": 75.02,
+      "predicted_price": 73.688237,
+      "lower_price": 70.66326,
+      "upper_price": 76.713213
+    },
+    {
+      "date": "2025-02-24",
+      "actual_price": 74.78,
+      "predicted_price": 74.549506,
+      "lower_price": 71.472969,
+      "upper_price": 77.626044
+    },
+    {
+      "date": "2025-03-07",
+      "actual_price": 70.36,
+      "predicted_price": 74.160541,
+      "lower_price": 71.180948,
+      "upper_price": 77.140134
+    },
+    {
+      "date": "2025-03-18",
+      "actual_price": 70.56,
+      "predicted_price": 69.737537,
+      "lower_price": 66.905299,
+      "upper_price": 72.569775
+    },
+    {
+      "date": "2025-03-29",
+      "actual_price": 73.31,
+      "predicted_price": 72.880992,
+      "lower_price": 69.94069,
+      "upper_price": 75.821294
+    },
+    {
+      "date": "2025-04-09",
+      "actual_price": 65.48,
+      "predicted_price": 68.900191,
+      "lower_price": 65.848248,
+      "upper_price": 71.952134
+    },
+    {
+      "date": "2025-04-20",
+      "actual_price": 66.38,
+      "predicted_price": 64.793029,
+      "lower_price": 62.146835,
+      "upper_price": 67.439224
+    },
+    {
+      "date": "2025-05-01",
+      "actual_price": 62.13,
+      "predicted_price": 61.860833,
+      "lower_price": 59.151135,
+      "upper_price": 64.570531
+    },
+    {
+      "date": "2025-05-12",
+      "actual_price": 64.96,
+      "predicted_price": 62.980882,
+      "lower_price": 60.528398,
+      "upper_price": 65.433366
+    },
+    {
+      "date": "2025-05-23",
+      "actual_price": 64.78,
+      "predicted_price": 64.571843,
+      "lower_price": 61.908601,
+      "upper_price": 67.235085
+    },
+    {
+      "date": "2025-06-03",
+      "actual_price": 65.63,
+      "predicted_price": 65.019512,
+      "lower_price": 62.409859,
+      "upper_price": 67.629165
+    },
+    {
+      "date": "2025-06-14",
+      "actual_price": 71.93,
+      "predicted_price": 71.104107,
+      "lower_price": 68.385706,
+      "upper_price": 73.822507
+    },
+    {
+      "date": "2025-06-25",
+      "actual_price": 67.68,
+      "predicted_price": 69.479657,
+      "lower_price": 66.356634,
+      "upper_price": 72.60268
+    },
+    {
+      "date": "2025-07-06",
+      "actual_price": 69.09,
+      "predicted_price": 67.781259,
+      "lower_price": 65.006385,
+      "upper_price": 70.556133
+    },
+    {
+      "date": "2025-07-17",
+      "actual_price": 69.52,
+      "predicted_price": 68.454473,
+      "lower_price": 65.659572,
+      "upper_price": 71.249374
+    },
+    {
+      "date": "2025-07-28",
+      "actual_price": 70.04,
+      "predicted_price": 69.601123,
+      "lower_price": 66.783091,
+      "upper_price": 72.419155
+    },
+    {
+      "date": "2025-08-08",
+      "actual_price": 66.59,
+      "predicted_price": 66.854543,
+      "lower_price": 64.017785,
+      "upper_price": 69.691302
+    },
+    {
+      "date": "2025-08-19",
+      "actual_price": 65.79,
+      "predicted_price": 64.606196,
+      "lower_price": 61.913935,
+      "upper_price": 67.298457
+    },
+    {
+      "date": "2025-08-30",
+      "actual_price": 67.98,
+      "predicted_price": 68.031569,
+      "lower_price": 65.283112,
+      "upper_price": 70.780025
+    },
+    {
+      "date": "2025-09-10",
+      "actual_price": 67.49,
+      "predicted_price": 68.603755,
+      "lower_price": 65.851332,
+      "upper_price": 71.356178
+    },
+    {
+      "date": "2025-09-21",
+      "actual_price": 67.87,
+      "predicted_price": 68.07993,
+      "lower_price": 65.34163,
+      "upper_price": 70.81823
+    },
+    {
+      "date": "2025-10-02",
+      "actual_price": 64.11,
+      "predicted_price": 65.677912,
+      "lower_price": 62.85128,
+      "upper_price": 68.504544
+    },
+    {
+      "date": "2025-10-13",
+      "actual_price": 63.32,
+      "predicted_price": 63.397521,
+      "lower_price": 60.73186,
+      "upper_price": 66.063183
+    },
+    {
+      "date": "2025-10-24",
+      "actual_price": 65.94,
+      "predicted_price": 65.213229,
+      "lower_price": 62.71773,
+      "upper_price": 67.708728
+    },
+    {
+      "date": "2025-11-04",
+      "actual_price": 64.44,
+      "predicted_price": 65.286453,
+      "lower_price": 62.664195,
+      "upper_price": 67.908711
+    },
+    {
+      "date": "2025-11-15",
+      "actual_price": 63.87,
+      "predicted_price": 64.40517,
+      "lower_price": 61.802466,
+      "upper_price": 67.007874
+    },
+    {
+      "date": "2025-11-26",
+      "actual_price": 63.13,
+      "predicted_price": 63.074692,
+      "lower_price": 60.488684,
+      "upper_price": 65.660699
+    },
+    {
+      "date": "2025-12-07",
+      "actual_price": 62.52,
+      "predicted_price": 62.34988,
+      "lower_price": 59.783955,
+      "upper_price": 64.915804
+    },
+    {
+      "date": "2025-12-18",
+      "actual_price": 59.82,
+      "predicted_price": 60.384718,
+      "lower_price": 57.889618,
+      "upper_price": 62.879818
+    },
+    {
+      "date": "2025-12-29",
+      "actual_price": 61.94,
+      "predicted_price": 62.467349,
+      "lower_price": 59.940004,
+      "upper_price": 64.994694
+    }
+  ],
+  "events": [
+    {
+      "date": "2020-03-09",
+      "label": "地缘政治事件",
+      "hit_interval": true,
+      "actual_return_7d": -0.338,
+      "predicted_return_7d": -0.297623
+    },
+    {
+      "date": "2020-03-11",
+      "label": "地缘政治事件",
+      "hit_interval": false,
+      "actual_return_7d": -0.3,
+      "predicted_return_7d": -0.223802
+    },
+    {
+      "date": "2020-03-12",
+      "label": "地缘政治事件",
+      "hit_interval": false,
+      "actual_return_7d": -0.3355,
+      "predicted_return_7d": -0.267645
+    },
+    {
+      "date": "2020-03-18",
+      "label": "制裁/解禁事件",
+      "hit_interval": false,
+      "actual_return_7d": -0.3048,
+      "predicted_return_7d": -0.350084
+    },
+    {
+      "date": "2020-04-03",
+      "label": "制裁/解禁事件",
+      "hit_interval": false,
+      "actual_return_7d": 0.3682,
+      "predicted_return_7d": 0.270861
+    },
+    {
+      "date": "2020-04-06",
+      "label": "制裁/解禁事件",
+      "hit_interval": false,
+      "actual_return_7d": 0.4521,
+      "predicted_return_7d": 0.20268
+    },
+    {
+      "date": "2020-04-07",
+      "label": "制裁/解禁事件",
+      "hit_interval": false,
+      "actual_return_7d": 0.4015,
+      "predicted_return_7d": 0.136459
+    },
+    {
+      "date": "2020-04-08",
+      "label": "制裁/解禁事件",
+      "hit_interval": false,
+      "actual_return_7d": 0.3274,
+      "predicted_return_7d": 0.177744
+    },
+    {
+      "date": "2020-04-20",
+      "label": "负油价冲击",
+      "hit_interval": false,
+      "actual_return_7d": -0.1944,
+      "predicted_return_7d": -0.267134
+    },
+    {
+      "date": "2020-04-21",
+      "label": "制裁/解禁事件",
+      "hit_interval": false,
+      "actual_return_7d": -0.347,
+      "predicted_return_7d": -0.303185
+    },
+    {
+      "date": "2020-05-04",
+      "label": "制裁/解禁事件",
+      "hit_interval": false,
+      "actual_return_7d": 0.3607,
+      "predicted_return_7d": 0.175166
+    },
+    {
+      "date": "2020-05-05",
+      "label": "制裁/解禁事件",
+      "hit_interval": false,
+      "actual_return_7d": 0.5137,
+      "predicted_return_7d": 0.281337
+    },
+    {
+      "date": "2020-05-06",
+      "label": "制裁/解禁事件",
+      "hit_interval": false,
+      "actual_return_7d": 0.3185,
+      "predicted_return_7d": 0.166337
+    },
+    {
+      "date": "2022-02-24",
+      "label": "俄乌战争爆发",
+      "hit_interval": true,
+      "actual_return_7d": 0.0657,
+      "predicted_return_7d": 0.05579
+    },
+    {
+      "date": "2022-03-08",
+      "label": "俄油制裁冲击",
+      "hit_interval": true,
+      "actual_return_7d": 0.2192,
+      "predicted_return_7d": 0.244174
+    },
+    {
+      "date": "2023-10-07",
+      "label": "巴以冲突爆发",
+      "hit_interval": true,
+      "actual_return_7d": -0.0536,
+      "predicted_return_7d": -0.029434
+    },
+    {
+      "date": "2024-04-13",
+      "label": "中东冲突升级",
+      "hit_interval": true,
+      "actual_return_7d": -0.0031,
+      "predicted_return_7d": -0.020495
+    },
+    {
+      "date": "2025-10-06",
+      "label": "OPEC+ 决议",
+      "hit_interval": true,
+      "actual_return_7d": -0.0368,
+      "predicted_return_7d": -0.031557
+    },
+    {
+      "date": "2025-12-24",
+      "label": "地缘政治事件",
+      "hit_interval": true,
+      "actual_return_7d": 0.0429,
+      "predicted_return_7d": 0.040737
+    },
+    {
+      "date": "2025-12-25",
+      "label": "地缘政治事件",
+      "hit_interval": true,
+      "actual_return_7d": 0.0289,
+      "predicted_return_7d": 0.017436
+    }
+  ],
+  "bins": [
+    {
+      "range": "-10~-7",
+      "count": 21
+    },
+    {
+      "range": "-7~-5",
+      "count": 45
+    },
+    {
+      "range": "-5~-3",
+      "count": 166
+    },
+    {
+      "range": "-3~-1",
+      "count": 873
+    },
+    {
+      "range": "-1~1",
+      "count": 2062
+    },
+    {
+      "range": "1~3",
+      "count": 700
+    },
+    {
+      "range": "3~5",
+      "count": 94
+    },
+    {
+      "range": "5~7",
+      "count": 26
+    },
+    {
+      "range": "7~10",
+      "count": 8
+    }
+  ]
+}

@@ -71,10 +71,11 @@ if [ -f "$IMAGE_ARCHIVE" ]; then
 fi
 
 docker compose -f deploy/production/docker-compose.prod.yml up -d --no-build --remove-orphans
+docker compose -f deploy/production/docker-compose.prod.yml restart nginx
 
 docker image prune -f --filter "until=168h" >/dev/null || true
 
 sleep 8
-without_proxy curl -fsS http://127.0.0.1/healthz
+without_proxy curl -fsS "http://127.0.0.1:${HOST_HTTP_PORT:-18080}/healthz"
 echo
 docker compose -f deploy/production/docker-compose.prod.yml ps
