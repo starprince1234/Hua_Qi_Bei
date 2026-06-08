@@ -70,9 +70,12 @@ jobs:
             -f frontend/Dockerfile \
             frontend
 
+          docker pull "metacubex/mihomo:v1.19.27"
+
           docker save \
             "huaqibei-backend:${BACKEND_TAG}" \
             "huaqibei-frontend:${FRONTEND_TAG}" \
+            "metacubex/mihomo:v1.19.27" \
             -o /tmp/huaqibei-images.tar
 
           secrets_b64="$(printf '%s' "$secrets_json" | base64 -w 0)"

@@ -36,12 +36,20 @@ services:
       - GDELT_GOOGLE_CREDENTIALS_JSON=${GDELT_GOOGLE_CREDENTIALS_JSON:-}
       - GDELT_BIGQUERY_MAX_BYTES_BILLED=${GDELT_BIGQUERY_MAX_BYTES_BILLED:-1073741824}
       - NEWSAPI_API_KEY=${NEWSAPI_API_KEY:-}
+      - HTTP_PROXY=${HTTP_PROXY:-http://mihomo:7890}
+      - HTTPS_PROXY=${HTTPS_PROXY:-http://mihomo:7890}
+      - NO_PROXY=${NO_PROXY:-localhost,127.0.0.1,backend,frontend,nginx,mihomo}
+      - http_proxy=${HTTP_PROXY:-http://mihomo:7890}
+      - https_proxy=${HTTPS_PROXY:-http://mihomo:7890}
+      - no_proxy=${NO_PROXY:-localhost,127.0.0.1,backend,frontend,nginx,mihomo}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     expose:
       - "8000"
     networks:
       - huaqibei-net
+    depends_on:
+      - mihomo
 
   frontend:
     image: huaqibei-frontend:${FRONTEND_TAG:-prd}
@@ -70,6 +78,17 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ${CERTS_DIR:-./certs}:/etc/nginx/certs:ro
+    networks:
+      - huaqibei-net
+
+  mihomo:
+    image: metacubex/mihomo:${MIHOMO_TAG:-v1.19.27}
+    restart: unless-stopped
+    command: ["-d", "/mihomo", "-f", "/mihomo/config.yaml"]
+    volumes:
+      - ${MIHOMO_CONFIG_PATH:-/opt/mihomo/config.yaml}:/mihomo/config.yaml:ro
+    expose:
+      - "7890"
     networks:
       - huaqibei-net
 
