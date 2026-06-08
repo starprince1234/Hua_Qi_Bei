@@ -46,18 +46,22 @@ for key, value in secrets.items():
 : "${DEPLOY_PATH:=/opt/huaqibei/app}"
 : "${IMAGE_ARCHIVE:=/tmp/huaqibei-images.tar}"
 
+without_proxy() {
+  env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy -u ALL_PROXY -u all_proxy "$@"
+}
+
 mkdir -p "$(dirname "$DEPLOY_PATH")"
 
 if [ -d "$DEPLOY_PATH/.git" ]; then
-  git -C "$DEPLOY_PATH" remote set-url origin "$REPO_URL"
-  git -C "$DEPLOY_PATH" fetch --prune origin "$DEPLOY_BRANCH"
-  git -C "$DEPLOY_PATH" checkout "$DEPLOY_BRANCH"
-  git -C "$DEPLOY_PATH" reset --hard "origin/$DEPLOY_BRANCH"
+  without_proxy git -C "$DEPLOY_PATH" remote set-url origin "$REPO_URL"
+  without_proxy git -C "$DEPLOY_PATH" fetch --prune origin "$DEPLOY_BRANCH"
+  without_proxy git -C "$DEPLOY_PATH" checkout "$DEPLOY_BRANCH"
+  without_proxy git -C "$DEPLOY_PATH" reset --hard "origin/$DEPLOY_BRANCH"
 else
   if [ -e "$DEPLOY_PATH" ]; then
     mv "$DEPLOY_PATH" "${DEPLOY_PATH}.bak.$(date +%Y%m%d%H%M%S)"
   fi
-  git clone --branch "$DEPLOY_BRANCH" "$REPO_URL" "$DEPLOY_PATH"
+  without_proxy git clone --branch "$DEPLOY_BRANCH" "$REPO_URL" "$DEPLOY_PATH"
 fi
 
 cd "$DEPLOY_PATH"
@@ -71,6 +75,6 @@ docker compose -f deploy/production/docker-compose.prod.yml up -d --no-build --r
 docker image prune -f --filter "until=168h" >/dev/null || true
 
 sleep 8
-curl -fsS http://127.0.0.1/healthz
+without_proxy curl -fsS http://127.0.0.1/healthz
 echo
 docker compose -f deploy/production/docker-compose.prod.yml ps
