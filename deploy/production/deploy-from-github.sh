@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-: "${DOPPLER_TOKEN:?DOPPLER_TOKEN is required}"
-: "${REPO_URL:?REPO_URL is required}"
-: "${DEPLOY_BRANCH:=main}"
-: "${DEPLOY_PATH:=/opt/huaqibei/app}"
-
-export DOPPLER_TOKEN
+: "${DOPPLER_SECRETS_JSON_B64:?DOPPLER_SECRETS_JSON_B64 is required}"
 
 if ! command -v git >/dev/null 2>&1; then
   apt-get update
   apt-get install -y git ca-certificates curl
+fi
+
+if ! command -v python3 >/dev/null 2>&1; then
+  apt-get update
+  apt-get install -y python3
 fi
 
 if ! command -v docker >/dev/null 2>&1; then
@@ -23,9 +23,27 @@ if ! docker compose version >/dev/null 2>&1; then
   exit 1
 fi
 
-if ! command -v doppler >/dev/null 2>&1; then
-  curl -Ls https://cli.doppler.com/install.sh | bash
-fi
+eval "$(
+  python3 -c '
+import base64
+import json
+import os
+import shlex
+
+payload = base64.b64decode(os.environ["DOPPLER_SECRETS_JSON_B64"]).decode("utf-8")
+secrets = json.loads(payload)
+for key, value in secrets.items():
+    if key.startswith("DOPPLER_"):
+        continue
+    if value is None:
+        value = ""
+    print(f"export {key}={shlex.quote(str(value))}")
+'
+)"
+
+: "${REPO_URL:?REPO_URL is required}"
+: "${DEPLOY_BRANCH:=main}"
+: "${DEPLOY_PATH:=/opt/huaqibei/app}"
 
 mkdir -p "$(dirname "$DEPLOY_PATH")"
 
@@ -43,11 +61,9 @@ fi
 
 cd "$DEPLOY_PATH"
 
-doppler run --project huaqibei --config prd -- \
-  docker compose -f deploy/production/docker-compose.prod.yml build
+docker compose -f deploy/production/docker-compose.prod.yml build
 
-doppler run --project huaqibei --config prd -- \
-  docker compose -f deploy/production/docker-compose.prod.yml up -d --remove-orphans
+docker compose -f deploy/production/docker-compose.prod.yml up -d --remove-orphans
 
 docker image prune -f --filter "until=168h" >/dev/null || true
 

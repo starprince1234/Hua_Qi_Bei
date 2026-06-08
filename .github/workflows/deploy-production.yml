@@ -37,25 +37,27 @@ jobs:
         run: |
           set -euo pipefail
 
-          doppler run --project huaqibei --config prd -- bash <<'INNER'
-          set -euo pipefail
+          secrets_json="$(doppler secrets download --project huaqibei --config prd --format=json --no-file --no-fallback)"
+          export SECRETS_JSON="$secrets_json"
+          get_secret() {
+            python3 -c 'import json, os, sys; print(json.loads(os.environ["SECRETS_JSON"]).get(sys.argv[1], ""))' "$1"
+          }
+
+          DEPLOY_HOST="$(get_secret DEPLOY_HOST)"
+          DEPLOY_USER="$(get_secret DEPLOY_USER)"
+          DEPLOY_PASSWORD="$(get_secret DEPLOY_PASSWORD)"
+          DEPLOY_PORT="$(get_secret DEPLOY_PORT)"
+          : "${DEPLOY_PORT:=22}"
 
           : "${DEPLOY_HOST:?DEPLOY_HOST is required in Doppler prd}"
           : "${DEPLOY_USER:?DEPLOY_USER is required in Doppler prd}"
           : "${DEPLOY_PASSWORD:?DEPLOY_PASSWORD is required in Doppler prd}"
-          : "${DEPLOY_PORT:=22}"
-          : "${REPO_URL:?REPO_URL is required in Doppler prd}"
-          : "${DEPLOY_BRANCH:=main}"
-          : "${DEPLOY_PATH:=/opt/huaqibei/app}"
-          : "${DOPPLER_TOKEN:?DOPPLER_TOKEN is required}"
 
-          printf -v remote_env 'DOPPLER_TOKEN=%q REPO_URL=%q DEPLOY_BRANCH=%q DEPLOY_PATH=%q' \
-            "$CI_DOPPLER_TOKEN" "$REPO_URL" "$DEPLOY_BRANCH" "$DEPLOY_PATH"
-
+          secrets_b64="$(printf '%s' "$secrets_json" | base64 -w 0)"
+          printf -v remote_env 'DOPPLER_SECRETS_JSON_B64=%q' "$secrets_b64"
           sshpass -p "$DEPLOY_PASSWORD" ssh \
             -o StrictHostKeyChecking=accept-new \
             -o ServerAliveInterval=30 \
             -p "$DEPLOY_PORT" \
             "$DEPLOY_USER@$DEPLOY_HOST" \
             "$remote_env bash -s" < deploy/production/deploy-from-github.sh
-          INNER
