@@ -26,6 +26,14 @@ const INITIAL_FILTERS: EventFilters = {
   keyword: '',
 };
 
+interface CachedNewsState {
+  filters: EventFilters;
+  eventList: NewsEventList;
+}
+
+const NEWS_CACHE_KEY = 'huaqibei.newsEvents.cache.v1';
+let memoryNewsCache: CachedNewsState | null = null;
+
 const directionStyles: Record<ImpactDirection, string> = {
   bullish: 'border-green-500/40 bg-green-500/10 text-green-300',
   bearish: 'border-red-500/40 bg-red-500/10 text-red-300',
@@ -78,6 +86,45 @@ function formatTimestamp(timestamp: string): string {
 
 function formatScore(score: number): string {
   return `${Math.round(score * 100)}%`;
+}
+
+function readCachedNewsState(): CachedNewsState | null {
+  if (memoryNewsCache) {
+    return memoryNewsCache;
+  }
+
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  try {
+    const raw = window.localStorage.getItem(NEWS_CACHE_KEY);
+    if (!raw) {
+      return null;
+    }
+    const parsed = JSON.parse(raw) as CachedNewsState;
+    if (!parsed?.eventList?.items || !parsed.filters) {
+      return null;
+    }
+    memoryNewsCache = parsed;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeCachedNewsState(nextState: CachedNewsState): void {
+  memoryNewsCache = nextState;
+
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(NEWS_CACHE_KEY, JSON.stringify(nextState));
+  } catch {
+    // Keep the in-memory cache even if browser storage is unavailable or full.
+  }
 }
 
 function ProviderStatusBadge({ providerStatus }: { providerStatus: string }) {
@@ -183,32 +230,46 @@ function NewsCard({ event, providerStatus }: { event: NewsEvent; providerStatus:
 }
 
 export default function NewsPanel() {
-  const [filters, setFilters] = useState<EventFilters>(INITIAL_FILTERS);
-  const [appliedFilters, setAppliedFilters] = useState<EventFilters>(INITIAL_FILTERS);
-  const [eventList, setEventList] = useState<NewsEventList | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [initialCachedState] = useState<CachedNewsState | null>(() => memoryNewsCache);
+  const [filters, setFilters] = useState<EventFilters>(initialCachedState?.filters ?? INITIAL_FILTERS);
+  const [appliedFilters, setAppliedFilters] = useState<EventFilters>(initialCachedState?.filters ?? INITIAL_FILTERS);
+  const [eventList, setEventList] = useState<NewsEventList | null>(initialCachedState?.eventList ?? null);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const cachedState = readCachedNewsState();
+    if (!cachedState) {
+      return;
+    }
+
+    setFilters(cachedState.filters);
+    setAppliedFilters(cachedState.filters);
+    setEventList(cachedState.eventList);
+  }, []);
 
   const sources = useMemo(() => {
     const eventSources = eventList?.items.map((event) => event.source).filter(Boolean) ?? [];
     return Array.from(new Set(eventSources)).sort((a, b) => a.localeCompare(b));
   }, [eventList]);
 
-  const loadEvents = useCallback(async () => {
+  const loadEvents = useCallback(async (nextFilters: EventFilters = appliedFilters) => {
     setIsLoading(true);
     setError(null);
 
     try {
       const data = await getEvents({
-        impact_direction: appliedFilters.impact_direction || undefined,
-        impact_level: appliedFilters.impact_level || undefined,
-        source: appliedFilters.source.trim() || undefined,
-        from_date: appliedFilters.from_date || undefined,
-        to_date: appliedFilters.to_date || undefined,
-        keyword: appliedFilters.keyword.trim() || undefined,
+        impact_direction: nextFilters.impact_direction || undefined,
+        impact_level: nextFilters.impact_level || undefined,
+        source: nextFilters.source.trim() || undefined,
+        from_date: nextFilters.from_date || undefined,
+        to_date: nextFilters.to_date || undefined,
+        keyword: nextFilters.keyword.trim() || undefined,
         limit: 50,
       });
+      setAppliedFilters(nextFilters);
       setEventList(data);
+      writeCachedNewsState({ filters: nextFilters, eventList: data });
     } catch (loadError: unknown) {
       setError(getErrorMessage(loadError));
     } finally {
@@ -216,22 +277,19 @@ export default function NewsPanel() {
     }
   }, [appliedFilters]);
 
-  useEffect(() => {
-    void loadEvents();
-  }, [loadEvents]);
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setAppliedFilters(filters);
+    void loadEvents(filters);
   };
 
   const resetFilters = () => {
     setFilters(INITIAL_FILTERS);
-    setAppliedFilters(INITIAL_FILTERS);
   };
 
   const events = eventList?.items ?? [];
   const providerStatus = eventList?.provider_status ?? 'unavailable';
+  const hasCachedEvents = Boolean(eventList);
+  const hasPendingFilterChanges = JSON.stringify(filters) !== JSON.stringify(appliedFilters);
 
   return (
     <section className="w-full max-w-7xl mx-auto p-4">
@@ -245,17 +303,22 @@ export default function NewsPanel() {
           <div>
             <h2 className="text-2xl font-bold text-white">News Intelligence</h2>
             <p className="mt-1 text-sm text-gray-400">
-              Filter event signals by market impact, source, and keyword. API responses are loaded through the shared client.
+              News stays cached on this page. Change filters, then press Apply to fetch a fresh snapshot.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
             <span className="rounded-full border border-gray-700 bg-gray-800 px-3 py-1 text-sm text-gray-300">
-              {eventList ? `${events.length} events` : 'Events loading'}
+              {eventList ? `${events.length} events` : 'No snapshot loaded'}
             </span>
             <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-sm text-amber-200">
               Updated: {eventList ? formatTimestamp(eventList.updated_at) : '-'}
             </span>
             <ProviderStatusBadge providerStatus={providerStatus} />
+            {hasPendingFilterChanges && (
+              <span className="rounded-full border border-blue-400/40 bg-blue-400/10 px-3 py-1 text-sm text-blue-200">
+                Pending filters
+              </span>
+            )}
           </div>
         </div>
 
@@ -356,7 +419,7 @@ export default function NewsPanel() {
 
       {isLoading && (
         <div className="rounded-lg border border-gray-800 bg-gray-900 p-8 text-center text-gray-300">
-          Loading news events...
+          Fetching news events...
         </div>
       )}
 
@@ -364,17 +427,17 @@ export default function NewsPanel() {
         <div className="rounded-lg border border-red-700 bg-red-900/30 p-6 text-red-200">
           <p className="font-semibold">News events failed to load.</p>
           <p className="mt-1 text-sm">{error}</p>
-          <button
-            type="button"
-            onClick={() => void loadEvents()}
-            className="mt-4 rounded-md border border-red-400/60 px-4 py-2 text-sm font-medium text-red-100 hover:bg-red-900/40"
-          >
-            Try again
-          </button>
+          <p className="mt-3 text-sm text-red-100/80">Update filters if needed, then press Apply to request a fresh snapshot.</p>
         </div>
       )}
 
-      {!isLoading && !error && events.length === 0 && (
+      {!isLoading && !error && !hasCachedEvents && (
+        <div className="rounded-lg border border-gray-800 bg-gray-900 p-8 text-center text-gray-300">
+          Press Apply to fetch the latest news snapshot.
+        </div>
+      )}
+
+      {!isLoading && !error && hasCachedEvents && events.length === 0 && (
         <div className="rounded-lg border border-gray-800 bg-gray-900 p-8 text-center text-gray-300">
           No news events matched the selected filters.
         </div>

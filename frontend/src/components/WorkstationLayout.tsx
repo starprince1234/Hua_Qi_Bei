@@ -102,10 +102,10 @@ export default function WorkstationLayout() {
 
   const capabilityCards: CapabilityCardConfig[] = [
     {
-      title: '上传预测',
-      metric: '下一步: 生成预测',
-      description: '上传油价与宏观因子数据，进入现有预测配置和结果解释流程。',
-      actionLabel: '开始上传',
+      title: 'Upload & Predict',
+      metric: 'Next: generate prediction',
+      description: 'Upload oil price and macro factor data, then continue through prediction setup and result interpretation.',
+      actionLabel: 'Start upload',
       primary: true,
       onClick: () => {
         setActiveTab('workstation');
@@ -113,24 +113,24 @@ export default function WorkstationLayout() {
       },
     },
     {
-      title: '新闻事件',
-      metric: overview ? `事件数: ${overview.news_event_count}` : '事件加载中',
-      description: '查看近 24 小时油价事件驱动信号、方向、强度和置信度。',
-      actionLabel: '查看事件',
+      title: 'News Events',
+      metric: overview ? `Events: ${overview.news_event_count}` : 'Events loading',
+      description: 'Review oil market event signals, direction, intensity, and confidence from the latest news snapshot.',
+      actionLabel: 'View events',
       onClick: () => setActiveTab('news'),
     },
     {
-      title: '回测验证',
-      metric: overview?.backtest.available ? `样本数: ${overview.backtest.point_count}` : '等待历史标签数据',
-      description: '验证历史窗口下的方向命中、误差水平和区间覆盖表现；当前不再使用 demo 回测。',
-      actionLabel: '查看回测',
+      title: 'Backtest Validation',
+      metric: overview?.backtest.available ? `Samples: ${overview.backtest.point_count}` : 'Waiting for historical labels',
+      description: 'Validate directional hit rate, error level, and interval coverage on historical windows; demo backtests are no longer used.',
+      actionLabel: 'View backtest',
       onClick: () => setActiveTab('backtest'),
     },
     {
-      title: '因子历史',
-      metric: overview ? `历史点数: ${overview.factor_history_points}` : '历史因子加载中',
-      description: '查看同一离线验证批次下的库存、地缘、宏观、供需和技术因子贡献。',
-      actionLabel: '查看因子',
+      title: 'Factor History',
+      metric: overview ? `History points: ${overview.factor_history_points}` : 'Factor history loading',
+      description: 'Inspect inventory, geopolitical, macro, supply-demand, and technical factor contribution within the same offline validation batch.',
+      actionLabel: 'View factors',
       onClick: () => setActiveTab('factorHistory'),
     },
   ];
@@ -163,10 +163,10 @@ export default function WorkstationLayout() {
 
   return (
     <div className="relative min-h-screen">
-      {/* 噪点纹理 */}
+      {/* Noise texture */}
       <div className="noise-texture"></div>
 
-      {/* 聚焦效果 */}
+      {/* Spotlight effect */}
       <div className="spotlight" id="spotlight"></div>
 
       <nav className="sticky top-0 z-20 border-b border-gray-800 bg-background/85 px-4 py-4 backdrop-blur-md">
@@ -208,7 +208,7 @@ export default function WorkstationLayout() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
           >
-            {/* 工作台首屏 */}
+            {/* Workstation landing view */}
             <section className="relative z-10 min-h-screen px-4 py-12">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -220,7 +220,7 @@ export default function WorkstationLayout() {
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                       <p className="text-sm uppercase tracking-[0.3em] text-accent-primary">Risk intelligence console</p>
-                      <h1 className="mt-2 text-4xl font-bold text-white md:text-5xl">Oil Risk Intelligence 工作台</h1>
+                      <h1 className="mt-2 text-4xl font-bold text-white md:text-5xl">Oil Risk Intelligence Workstation</h1>
                     </div>
                     <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
                       <div className="rounded-md border border-gray-800 bg-gray-950 px-4 py-3">
@@ -263,7 +263,7 @@ export default function WorkstationLayout() {
                         </div>
                         <div>
                           <p className={`text-lg font-semibold ${card.primary ? 'text-background' : 'text-accent-primary'}`}>{card.metric}</p>
-                          <p className={`mt-2 text-sm font-medium ${card.primary ? 'text-background/80' : 'text-gray-300'}`}>{card.actionLabel} →</p>
+                          <p className={`mt-2 text-sm font-medium ${card.primary ? 'text-background/80' : 'text-gray-300'}`}>{card.actionLabel} -&gt;</p>
                         </div>
                       </div>
                     </motion.button>
@@ -274,7 +274,7 @@ export default function WorkstationLayout() {
                   <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
                     <div>
                       <p className="text-sm uppercase tracking-[0.25em] text-gray-500">Today&apos;s briefing</p>
-                      <h2 className="mt-2 text-3xl font-bold text-accent-primary">今日风险摘要</h2>
+                      <h2 className="mt-2 text-3xl font-bold text-accent-primary">Today&apos;s Risk Briefing</h2>
                     </div>
                     <p className="text-sm text-gray-400">
                       {overviewError ? `Overview load warning: ${overviewError}` : 'Online data from news providers and successful uploaded prediction runs.'}
@@ -326,7 +326,7 @@ export default function WorkstationLayout() {
             transition={{ duration: 0.25 }}
           >
 
-            {/* 文件上传 */}
+            {/* File upload */}
             {step === 'upload' && (
               <section className="relative z-10 py-20 px-4">
                 <div className="max-w-7xl mx-auto">
@@ -335,14 +335,14 @@ export default function WorkstationLayout() {
                     onClick={() => setActiveTab('overview')}
                     className="mb-8 px-6 py-2 bg-transparent border-2 border-accent-primary text-accent-primary rounded-md font-medium transition-all duration-300"
                   >
-                    ← Back to Home
+                    &lt;- Back to Home
                   </motion.button>
                   <FileUploader onUploadSuccess={handleUploadSuccess} />
                 </div>
               </section>
             )}
 
-            {/* 预测表单 */}
+            {/* Prediction form */}
             {step === 'predict' && (
               <section className="relative z-10 py-20 px-4">
                 <div className="max-w-7xl mx-auto">
@@ -351,14 +351,14 @@ export default function WorkstationLayout() {
                     onClick={handleBackToUpload}
                     className="mb-8 px-6 py-2 bg-transparent border-2 border-accent-primary text-accent-primary rounded-md font-medium transition-all duration-300"
                   >
-                    ← Back to Upload
+                    &lt;- Back to Upload
                   </motion.button>
                   <PredictForm fileId={fileId} onPredictSuccess={handlePredictSuccess} />
                 </div>
               </section>
             )}
 
-            {/* 结果展示 */}
+            {/* Result display */}
             {step === 'result' && (
               <section className="relative z-10 py-20 px-4">
                 <div className="max-w-7xl mx-auto">
@@ -367,7 +367,7 @@ export default function WorkstationLayout() {
                     onClick={handleBackToPredict}
                     className="mb-8 px-6 py-2 bg-transparent border-2 border-accent-primary text-accent-primary rounded-md font-medium transition-all duration-300"
                   >
-                    ← Back to Predict
+                    &lt;- Back to Predict
                   </motion.button>
                   {predictionResult && <ResultDisplay result={predictionResult} />}
                 </div>
@@ -395,16 +395,16 @@ export default function WorkstationLayout() {
         )}
       </AnimatePresence>
 
-      {/* 页脚 */}
+      {/* Footer */}
       <footer className="relative z-10 py-12 px-4 border-t border-gray-800">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-gray-400">
-            © 2026 Oil Risk Intelligence Platform | Enterprise-Grade Financial Analytics
+            (c) 2026 Oil Risk Intelligence Platform | Enterprise-Grade Financial Analytics
           </p>
         </div>
       </footer>
 
-      {/* 聚焦效果脚本 */}
+      {/* Spotlight script */}
       <script dangerouslySetInnerHTML={{
         __html: `
           document.addEventListener('mousemove', (e) => {

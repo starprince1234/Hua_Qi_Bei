@@ -22,6 +22,7 @@ sudo apt-get update -y
 sudo apt-get install -y autossh sshpass
 
 SERVICE_FILE=/etc/systemd/system/autodl-tunnel.service
+SSH_PASSWORD="${AUTODL_SSH_PASSWORD//\'/\'\"\'\"\'}"
 
 sudo tee "$SERVICE_FILE" >/dev/null <<EOF
 [Unit]
@@ -34,7 +35,7 @@ Type=simple
 Environment="AUTOSSH_GATETIME=0"
 Environment="AUTOSSH_POLL=30"
 Environment="AUTOSSH_FIRST_POLL=30"
-ExecStart=/usr/bin/sshpass -p '${AUTODL_SSH_PASSWORD}' /usr/bin/autossh -M 0 -N -C -g \
+ExecStart=/usr/bin/sshpass -p '${SSH_PASSWORD}' /usr/bin/autossh -M 0 -N -C -g \
   -o ExitOnForwardFailure=yes \
   -o ServerAliveInterval=30 \
   -o ServerAliveCountMax=3 \
